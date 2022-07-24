@@ -1,0 +1,131 @@
+.owl-theme{
+    background-image: url(../../assets/gray-bricks.jpg);
+    position: relative;
+}
+.item{
+    height: 100%;
+}
+.owl-item{
+    height: 500px;
+}
+.stand{
+    width: 80% !important;
+    margin-top: 350px;
+    height: 300px !important;
+}
+.owl-nav{
+    position: absolute;
+    width: 100%;
+    top: 200px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 40px !important;
+    padding: 15px;
+}
+.owl-nav button:hover , .owl-nav button:focus , .owl-nav button:active{
+    color: black !important;
+    background-color: transparent !important;
+}
+.books {
+    max-height: 250px;
+    position: absolute;
+    top: 60px;
+}
+.books img{
+    width: 250px !important;
+}
+.text-page {
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 96px;
+    margin-bottom: 96px ;
+}
+.text-page h2{
+    color: #229955;
+    margin-bottom: 15px;   
+}
+.text-page p{
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+.text-page button{
+    background-color: #229955;
+    color: white;
+    padding: 6px 10px;
+    margin-top: 10px;
+}
+.text-page button:hover{
+    background-color: #177741;
+    cursor: pointer;
+    color: white;
+}
+.books2 img{
+    width: 250px !important;
+}
+.first2{
+    z-index: 3;
+    margin-right:-120px;
+}
+.second2{
+    z-index: 2;
+    margin-right:-120px;
+}
+@media (max-width:992px) {
+    .third{
+        display: none !important;
+    }
+    .books img{
+        width: 200px !important;
+    }
+    .books2 img{
+        display: none !important;
+    }
+    .text-page{
+        height: inherit;
+        text-align: center;
+        justify-content: center;
+        margin-top: 20px!important;
+        margin-bottom: 30px !important;
+    }
+}   
+@media (max-width:768px) {
+    .second{
+        display: none !important;
+    }    
+}
+/* ----------------------------- owl carousel end ----------------------------------------- */
+/* ----------------------------- info-column start---------------------------------------- */
+.info-column{
+    position: relative;
+    top: -20px;
+    z-index: 5;
+}
+.info-column > .row {
+    color: white;
+    padding: 40px 20px;
+    background-color: #27ae61;
+}
+.info-column svg{
+    background-color: #229955;
+    width: 50px;
+    padding: 10px;
+    height: 50px;
+    margin-right: 12px;
+    border-radius: 50%;
+}
+.info-column p{
+    font-size: 15px;
+    margin-bottom: 0;
+}
+@media (max-width:768px) {
+    .info-column > div>div:not(:first-child){
+        margin-top: 30px;
+    } 
+}
+/* ----------------------------- info-column end ---------------------------------------- */
+
+
+
+
+
+

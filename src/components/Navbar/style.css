@@ -1,0 +1,45 @@
+.navbar-brand{
+    padding: 10px 15px 14px 15px !important;
+    margin-right: 0px !important;
+    height: inherit !important;
+    color: white !important;
+}
+nav{
+    position: sticky;
+    width: 100%;
+    top:0px;
+    padding: 0 !important;
+    background-color: #27ae61 !important;
+}
+nav a{
+    color: white !important;
+    padding: 15px 10px 15px 10px !important;
+}
+nav a:hover{
+    background-color: #229955;
+}
+nav a.active{
+    background-color: #229955;
+}
+nav form{
+    padding: 5px !important;
+}
+nav button{
+    border: 1px solid white !important;
+    color: white !important;
+}
+nav button:focus, nav button:hover{
+    background-color: #229955;
+}
+.form-control:focus{
+    border-color: #229955 !important;
+    box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.445) !important;
+}
+@media (max-width:992px) {
+    nav{
+        text-align: center;
+    }
+    form{
+        margin-bottom: 10px !important;       
+    }
+}

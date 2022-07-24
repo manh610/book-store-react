@@ -1,0 +1,15 @@
+.empty-cart{
+    text-align: center;
+}
+.empty-cart img{
+    max-width: 400px;
+    padding: 10px;
+    margin: 0 auto;
+}
+.empty-cart .btn{
+    background-color: #27ae61;
+    color: white;
+}
+.cart-books img{
+    max-width: 150;
+}

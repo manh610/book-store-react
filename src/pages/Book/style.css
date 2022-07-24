@@ -1,0 +1,6 @@
+.one-book .info{
+    height: inherit;
+}
+.one-book img{
+    max-height: 400px;
+}

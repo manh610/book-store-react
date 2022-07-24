@@ -1,0 +1,49 @@
+.TopBar{
+    background-color: #F5F5F5;
+    color: #999999;
+    padding: 7px 0;
+    border-top: 3px solid #27ae61;
+}
+.TopBar .content{
+    display: flex;
+    justify-content: space-between;
+}
+.TopBar a:not(:last-child){
+    border-right: 1px solid #27ae61;
+}
+.TopBar a{
+    color: #999999;
+    text-decoration: none;
+
+    padding: 0 10px;
+}
+.TopBar a:hover{
+    color: #999999;
+}
+.TopBar .info > div {
+    margin: 0 5px;
+}
+.TopBar svg{
+    margin-bottom: 2px;
+    margin-right:10px;
+}
+.TopBar .sign-out{
+    color: #999999;
+    padding: 0 10px;
+}
+.TopBar .sign-out:hover{
+    color: #999999;
+}
+@media (max-width : 768px) {
+    .TopBar .content{
+        justify-content: center !important;
+        flex-direction: column !important;
+    }
+    .TopBar .links{
+        justify-content: center !important ;
+        text-align: center;
+    }
+    .TopBar .info{
+        display: none !important;
+    }
+}
