@@ -25,12 +25,12 @@ const Account = () => {
             <div className='container'>
                 <div className='row py-5 justify-content-center'>
                     <div className="col-md-12 my-3">
-                        <h4>hello {user.username}!</h4>
+                        <h4>hello {user.name}!</h4>
                         <p>{user.email}</p>
                     </div>
                     <div className="col-md-6 my-3">
                         <h4>Owned Books</h4>
-                        <p>---------------</p>
+                        <p>________________</p>
                         <ul>
                             {user.bought.map((ownedbook)=>(
                                 bookstate.books.map((book)=>(book.id===ownedbook && 
@@ -41,7 +41,7 @@ const Account = () => {
                     </div>
                     <div className="col-md-6 my-3">  
                         <h4>Favorite books</h4>
-                        <p>---------------</p>
+                        <p>________________</p>
                         <ul>
                             {user.loved.map((ownedbook)=>(
                                 bookstate.books.map((book)=>(book.id===ownedbook && 

@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { useSelector , useDispatch } from 'react-redux';
 import './style.css';
-import {retriveAction} from '../../redux/actions/actions';
-import {Link} from 'react-router-dom'
+import {getCurrencyAction, retriveAction} from '../../redux/actions/actions';
+import {Link} from 'react-router-dom';
 
 function Exclusive() {
 
   const dispatch = useDispatch();
-
+  const currency = useSelector(state=> state.currencyroot);
   const bookstate = useSelector(state=>state.booksroot);
 
   useEffect(()=>{  
     dispatch(retriveAction());
+    dispatch(getCurrencyAction());
   },[])
 
   return (
@@ -33,7 +34,7 @@ function Exclusive() {
                         </div>
                         <div className='book-info col-md-8'>
                           <h3>{book.name}</h3>
-                          <p>{book.price[0].amount} {book.price[0].currency}</p>
+                          <p>{book.price.map((price)=>{return (price.currency===currency.current?price.amount:"")})}<span> {currency.current}</span></p>
                         </div>
                       </div>
                     </Link>

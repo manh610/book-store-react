@@ -8,11 +8,11 @@
       "price": [
         {
           "amount": 60,
-          "currency": "$"
+          "currency": "USD $"
         },
         {
           "amount": 144.69,
-          "currency": "LE"
+          "currency": "EGP LE"
         }
       ],
       "inStock": true,
@@ -29,11 +29,11 @@
       "price": [
         {
           "amount": 60,
-          "currency": "$"
+          "currency": "USD $"
         },
         {
           "amount": 144.69,
-          "currency": "LE"
+          "currency": "EGP LE"
         }
       ],
       "inStock": true,
@@ -50,11 +50,11 @@
       "price": [
         {
           "amount": 60,
-          "currency": "$"
+          "currency": "USD $"
         },
         {
           "amount": 144.69,
-          "currency": "LE"
+          "currency": "EGP LE"
         }
       ],
       "inStock": false,
@@ -71,11 +71,11 @@
       "price": [
         {
           "amount": 60,
-          "currency": "$"
+          "currency": "USD $"
         },
         {
           "amount": 144.69,
-          "currency": "LE"
+          "currency": "EGP LE"
         }
       ],
       "inStock": false,
@@ -92,11 +92,11 @@
       "price": [
         {
           "amount": 60,
-          "currency": "$"
+          "currency": "USD $"
         },
         {
           "amount": 144.69,
-          "currency": "LE"
+          "currency": "EGP LE"
         }
       ],
       "inStock": false,
@@ -113,11 +113,11 @@
       "price": [
         {
           "amount": 60,
-          "currency": "$"
+          "currency": "USD $"
         },
         {
           "amount": 144.69,
-          "currency": "LE"
+          "currency": "EGP LE"
         }
       ],
       "inStock": false,
@@ -134,11 +134,11 @@
       "price": [
         {
           "amount": 60,
-          "currency": "$"
+          "currency": "USD $"
         },
         {
           "amount": 144.69,
-          "currency": "LE"
+          "currency": "EGP LE"
         }
       ],
       "inStock": false,
@@ -155,11 +155,11 @@
       "price": [
         {
           "amount": 60,
-          "currency": "$"
+          "currency": "USD $"
         },
         {
           "amount": 144.69,
-          "currency": "LE"
+          "currency": "EGP LE"
         }
       ],
       "inStock": false,
@@ -176,11 +176,11 @@
       "price": [
         {
           "amount": 60,
-          "currency": "$"
+          "currency": "USD $"
         },
         {
           "amount": 144.69,
-          "currency": "LE"
+          "currency": "EGP LE"
         }
       ],
       "inStock": false,
@@ -197,11 +197,11 @@
       "price": [
         {
           "amount": 60,
-          "currency": "$"
+          "currency": "USD $"
         },
         {
           "amount": 144.69,
-          "currency": "LE"
+          "currency": "EGP LE"
         }
       ],
       "inStock": false,
@@ -301,6 +301,24 @@
       "bought": [],
       "cart": [],
       "id": "e1f8g5e"
+    },
+    {
+      "name": "Menna",
+      "email": "mennafaridhelmy@gmail.com",
+      "password": "123123",
+      "loved": [],
+      "bought": [],
+      "cart": [],
+      "id": "_9EIJiL"
+    },
+    {
+      "name": "maslan",
+      "email": "maslan@gmail.com",
+      "password": "maslan",
+      "loved": [],
+      "bought": [],
+      "cart": [],
+      "id": "jrAl2cX"
     }
   ],
   "loggedInUser": []

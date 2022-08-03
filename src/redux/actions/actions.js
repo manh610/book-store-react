@@ -1,13 +1,15 @@
-import { BUY ,
-         CART , 
-         LOGIN , 
-         LOGOUT , 
-         LOVE , 
-         REGISTER , 
-         RETRIVE , 
+import { GETCURRENCY,
+         EDITCURRENCY,
+         BUY,
+         CART, 
+         LOVE,
+         LOGIN, 
+         LOGOUT, 
+         REGISTER, 
          SETUSERS, 
          SETUSERS_FAILED, 
          SETUSERS_SUCCESS,
+         RETRIVE,
          RETRIVE_FAILED,
          RETRIVE_SUCCESS} from './types'
 
@@ -64,5 +66,12 @@ export const retrivesuccessAction = (data) =>({
 })
 export const retrivefailAction = (data) =>({
     type: RETRIVE_FAILED,
+    payload : data
+})
+export const getCurrencyAction = () =>({
+    type: GETCURRENCY,
+})
+export const editCurrencyAction = (data) =>({
+    type: EDITCURRENCY,
     payload : data
 })

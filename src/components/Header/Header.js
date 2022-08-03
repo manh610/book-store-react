@@ -1,13 +1,24 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../assets/logo_green.png'
 import './style.css'
 import { Link } from 'react-router-dom';
+import { editCurrencyAction, getCurrencyAction } from '../../redux/actions/actions';
 const Header = () => {
 
+    const currency = useSelector( state=> state.currencyroot);
+    const dispatch = useDispatch();
     const loggeduser = useSelector(state=>state.loggedInUserroot);
     let cartnumber;
     loggeduser != null ? cartnumber= loggeduser.cart.length : cartnumber = 0 ;
+
+    useEffect(()=>{  
+        dispatch(getCurrencyAction());
+    },[])
+    
+    const handleChange = (event) =>{
+        dispatch(editCurrencyAction(event.target.value));
+    }
 
     return (
     <header className='container'>
@@ -18,10 +29,13 @@ const Header = () => {
         </div>
         <div className='d-flex options'>
             <div className='currency'>
-                <select className="form-select" aria-label="Default select example">
-                    <option defaultValue value="1">USD $</option>
-                    <option value="2">EGP LE</option>
-                </select> 
+                {
+                    <select className="form-select" value={currency.current} onChange={handleChange} id="choosenCurrency">
+                        {currency.all.map((c)=>(
+                            <option key={`currency${c}`} value={c}>{c}</option>
+                        ))}
+                    </select>
+                }
             </div>
             <div className='cart' >
                 <Link to='/cart'>
