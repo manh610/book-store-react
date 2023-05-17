@@ -1,13 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import { useParams } from 'react-router';
+import { Button, Comment, Form, Input, List, Image} from 'antd';
+import moment from 'moment';
+const { TextArea } = Input;
 
-function Book() {
+const Book = () => {
 	const { id } = useParams();
 
 	let styleLove;
 	let styleBuy;
 
+	const [comments, setComments] = useState([]);
+	const [value, setValue] = useState('');
+	const handleSubmit = () => {
+		if (!value) return;
+		setValue('');
+		setComments([
+			...comments,
+			{
+				avatar: <Image preview={false} style={{paddingRight: 10, marginTop: 4}} width={50} src="./image/user.png" alt="Han Solo" />,
+				author: 'Han Solo',
+				content: <p>{value}</p>,
+				// datetime: moment('2016-11-22').fromNow(),
+			},
+		]);
+	};
 	const init = {
 		"id": 1,
 		"title": "book1",
@@ -18,8 +36,6 @@ function Book() {
 		"price": 200,
 		"page": 200
 	}
-
-	
 
 	const books = [
 		{
@@ -94,6 +110,31 @@ function Book() {
 							</div>
 						</div>    
 					</div>
+				</div>
+				<div className='comment'>
+					<List
+						className='list-comment'
+						dataSource={comments}
+						header="Nhận xét: "
+						itemLayout="horizontal"
+						renderItem={(props) => <Comment {...props} />}
+					/>
+					<Comment
+						className='com'
+						// avatar={<Image preview={false} width={30} src="./image/user.png" alt="Han Solo" />}
+						content={
+							<div>
+								<Form.Item>
+									<TextArea style={{width: '900px'}} rows={3} onChange={(e) => setValue(e.target.value)} value={value} />
+								</Form.Item>
+								<Form.Item>
+									<Button onClick={handleSubmit} className='btnAddCom'>
+										Thêm nhận xét
+									</Button>
+								</Form.Item>
+							</div>
+						}
+					/>
 				</div>
 			</div>
 		</section>

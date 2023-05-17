@@ -4,3 +4,37 @@
 .one-book img{
     max-height: 400px;
 }
+
+.one-book {
+    margin-bottom: 50px;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+}
+
+.btnAddCom {
+    background-color: #0c83d3cc;
+    color: white;
+    padding: 8px
+}
+
+.com {
+    display: flex;
+    flex-direction: row;
+}
+
+.ant-comment-inner {
+    display: flex;
+    flex-direction: row;
+}
+
+.list-comment {
+    width: 900px;
+}
+
+.ant-list-header {
+    padding-bottom: 10px;
+}
