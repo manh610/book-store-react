@@ -5,32 +5,17 @@ import { Redirect } from 'react-router-dom';
 
 const Register = () => {
 
-    const [ newname , setName ]= useState('');
+    const [ fullName , setFullName ]= useState('');
+    const [ username , setUsername]= useState('');
     const [ newpassword , setPassword ]= useState('');
     const [ confirm , setConfirm ] = useState('')
     const [ registered , setRegistered ] = useState(false);
 
     const SignUp = () =>{
-
-        if(newpassword===confirm){
-
-            const payload = {
-                name:newname,
-                password:newpassword,
-                loved:[],
-                bought:[],
-                cart:[]
-            };
-        
-            console.log(payload);
-            alert('registered successfully');
-            alert('logged in succefully');  
-            setRegistered(true);
-            return null
-        }else{
-            alert("passwords does't match");
-            return null
-        }
+        alert('registered successfully');
+        alert('logged in succefully');  
+        setRegistered(true);
+        return null
     }
 
     return (
@@ -38,12 +23,12 @@ const Register = () => {
         <div className='container'>
             <div className='row py-5'>
                 <div className="col-md-6 my-3">
-                    <label htmlFor="exampleFormControlInput1" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Enter Name" onChange={e=>setName(e.target.value)} />
+                    <label htmlFor="exampleFormControlInput1" className="form-label">Full Name</label>
+                    <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Enter Name" onChange={e=>setFullName(e.target.value)} />
                 </div>
                 <div className="col-md-6 my-3">
-                    {/* <label htmlFor="exampleFormControlInput2" className="form-label">Email</label> */}
-                    {/* <input type="email" className="form-control" id="exampleFormControlInput2" placeholder="Enter Email" onChange={e=>setEmail(e.target.value)} /> */}
+                    <label htmlFor="exampleFormControlInput2" className="form-label">Username</label> 
+                    <input type="email" className="form-control" id="exampleFormControlInput2" placeholder="Enter Email" onChange={e=>setUsername(e.target.value)} /> 
                 </div>
                 <div className="col-md-6 mb-3">
                     <label htmlFor="exampleFormControlInput3" className="form-label">Password</label>

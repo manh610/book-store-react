@@ -52,7 +52,7 @@ function Cart() {
 		},
 	]
 
-	const [bookstate, setBookState] = useState([]);
+	const [bookstate, setBookState] = useState(books);
 
     return (
         <section className='cart-section'>
