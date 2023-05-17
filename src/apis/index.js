@@ -47,9 +47,19 @@ export const createCommentAPI = async(payload) => axios.post(`${URL_API}/comment
     bookId: payload.bookId
 })
 
-export const getCommentByBookAPI = async(bookId) => axios.get(`${URL_API}/book/${bookId}`)
+export const getCommentByBookAPI = async(bookId) => axios.get(`${URL_API}/comment/book/${bookId}`)
 
-export const getCommentByUSerAPI = async(userId) => axios.get(`${URL_API}/user/${userId}`)
+export const getCommentByUSerAPI = async(userId) => axios.get(`${URL_API}/comment/user/${userId}`)
 
 
 // rate
+
+export const createRateAPI = async(payload) => axios.post(`${URL_API}/rate`, {
+    content: payload.content,
+    userId: payload.userId,
+    bookId: payload.bookId
+})
+
+export const getRateByBookAPI = async(bookId) => axios.get(`${URL_API}/rate/book/${bookId}`)
+
+export const getRateByUSerAPI = async(userId) => axios.get(`${URL_API}/rate/user/${userId}`)
