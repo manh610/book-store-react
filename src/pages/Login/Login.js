@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from "react-router-dom";
 import './style.css'
-
+import {toast} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { userService } from '../../service/user';
+import { loginAPI } from '../../apis';
 
 const Login = () => {
 
+    toast.configure();
 
-    const users = useState({});
+    // const navigate = useNavigate();
 
     const [logged , setloggged ] = useState(false);
-    const [ email , setEmail ] = useState('');
+    const [ username , setUsername ] = useState('');
     const [ password , setPassword ] = useState('');
 
-    const SignIn = () =>{
-        
-        const payload = users.find( user => user.email === email && user.password === password );
-
-        if(payload){
-            console.log('e7na gwa');
-            console.log(payload , 'askjdhshdsahhsakhasdkhdhkadkhdsakhsdahkdsakh');
-            alert('success login page');
-            setloggged(true);
-            return null;
-        }else{
-            alert('failed login page')
-            return null;
+    const SignIn = async () =>{
+        const payload = {
+            username: username,
+            password: password
         }
+
+        await loginAPI(payload)
+            .then(res => {
+                if ( res.data.statusCode == 'OK') {
+                    userService.set(res.data.data)
+                    setloggged(true)
+                } else {
+                    toast.error(res.data.message, {
+                        position: toast.POSITION.TOP_CENTER
+                    })
+                }
+            })
+            .catch(err => console.log(err))
     }
 
     return (
@@ -33,8 +41,8 @@ const Login = () => {
         <div className='container'>
             <div className='row py-5'>
                 <div className="col-md-6 my-3">
-                    <label htmlFor="exampleFormControlInput2" className="form-label">Email</label>
-                    <input type="email" className="form-control" id="exampleFormControlInput2" placeholder="Enter Email" onChange={e=>setEmail(e.target.value)} />
+                    <label htmlFor="exampleFormControlInput2" className="form-label">Username</label>
+                    <input type="email" className="form-control" id="exampleFormControlInput2" placeholder="Enter Email" onChange={e=>setUsername(e.target.value)} />
                 </div>
                 <div className="col-md-6 my-3">
                     <label htmlFor="exampleFormControlInput3" className="form-label">Password</label>

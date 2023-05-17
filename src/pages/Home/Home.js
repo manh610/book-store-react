@@ -29,7 +29,7 @@ export default function Home() {
                 <h2>CHOOSE YOU BRAIN FOOD</h2>
                 <p>SALES UP TO 70% OFF</p>
                 <h5>History / Novel / Health and Beauty</h5>  
-                <Link to='/text-books'><button className='btn'>Shop Now</button></Link>
+                <Link to='/'><button className='btn'>Shop Now</button></Link>
               </div>
               <div className='books2 d-flex'>
                 <img src={first} alt='' className='img-fluid first2'/>

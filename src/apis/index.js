@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PORT = 3009;
+const PORT = 3008;
 const URL_API = `http://localhost:${PORT}`
 
 // book api
@@ -28,7 +28,7 @@ export const addToCartAPI = async(payload) => axios.post(`${URL_API}/bookbill/cr
 
 export const removeFromCartAPI = async(id) => axios.delete(`${URL_API}/bookbill/delete/${id}`)
 
-export const getBookByUserAPI = async(userId) => axios.get(`${URL_API}/bookbill/user/${userId}`)
+export const getBookByUserAPI = async(payload) => axios.post(`${URL_API}/bookbill/user`, payload)
 
 
 
@@ -36,9 +36,9 @@ export const getBookByUserAPI = async(userId) => axios.get(`${URL_API}/bookbill/
 // comment
 export const createCommentAPI = async(payload) => axios.post(`${URL_API}/comment`, payload)
 
-export const getCommentByBookAPI = async(bookId) => axios.get(`${URL_API}/comment/book/${bookId}`)
+export const getCommentByBookAPI = async(payload) => axios.post(`${URL_API}/comment/book`, payload)
 
-export const getCommentByUSerAPI = async(userId) => axios.get(`${URL_API}/comment/user/${userId}`)
+export const getCommentByUSerAPI = async(payload) => axios.post(`${URL_API}/comment/user`, payload)
 
 
 
@@ -46,6 +46,6 @@ export const getCommentByUSerAPI = async(userId) => axios.get(`${URL_API}/commen
 // rate
 export const createRateAPI = async(payload) => axios.post(`${URL_API}/rate`, payload)
 
-export const getRateByBookAPI = async(bookId) => axios.get(`${URL_API}/rate/book/${bookId}`)
+export const getRateByBookAPI = async(payload) => axios.post(`${URL_API}/rate/book`, payload)
 
-export const getRateByUSerAPI = async(userId) => axios.get(`${URL_API}/rate/user/${userId}`)
+export const getRateByUSerAPI = async(payload) => axios.post(`${URL_API}/rate/user`, payload)

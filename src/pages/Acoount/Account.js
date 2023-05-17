@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector , useDispatch} from 'react-redux';
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './style.css'
+import { userService } from '../../service/user';
 
 
 const Account = () => {
 
-    const initUser = {
-        'id': 1,
-        'fullName': 'Do Dang Manh',
-        'username': 'manh610'
-    }
-    const [user, setUser] = useState(initUser);
+    const user = userService.get();
 
     const books = [
 		{
@@ -63,8 +59,8 @@ const Account = () => {
 
     return (
     <section className='account'>
-        { user === null ?
-            <Redirect to="/" replace={true} />:
+        {/* { user === null ?
+            <Link path="/" />: */}
             <div className='container'>
                 <div className='row py-5 justify-content-center'>
                     <div className="col-md-12 my-3">
@@ -95,7 +91,7 @@ const Account = () => {
                     </div>
                 </div>
             </div> 
-        }    
+        {/* }     */}
     </section>
   )
 }

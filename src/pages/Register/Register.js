@@ -9,12 +9,13 @@ const Register = () => {
     const [ username , setUsername]= useState('');
     const [ newpassword , setPassword ]= useState('');
     const [ confirm , setConfirm ] = useState('')
-    const [ registered , setRegistered ] = useState(false);
+
+    const [ registered, setRegisted] = useState(false);
+    // const navigate = useNavigate();
 
     const SignUp = () =>{
         alert('registered successfully');
         alert('logged in succefully');  
-        setRegistered(true);
         return null
     }
 

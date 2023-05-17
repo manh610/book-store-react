@@ -47,6 +47,58 @@ const Exclusive = () => {
 			"price": 200,
 			"page": 200
 		},
+		{
+			"id": 5,
+			"title": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "./image/book7.png",
+			"price": 200,
+			"page": 200
+		},
+		{
+
+			"id": 6,
+			"title": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "./image/book9.png",
+			"price": 200,
+			"page": 200
+		},
+    	{
+
+			"id": 7,
+			"title": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "./image/book12.png",
+			"price": 200,
+			"page": 200
+		},
+    	{
+			"id": 8,
+			"title": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "./image/book7.png",
+			"price": 200,
+			"page": 200
+		},
+		{
+			"id": 9,
+			"title": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "./image/book12.png",
+			"price": 200,
+			"page": 200
+		},
 	]
 
 	const [bookstate, setBookState] = useState(books);

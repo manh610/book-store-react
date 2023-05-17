@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import "./style.css"
+import { userService } from '../../service/user';
 
 
 const TopBar = () => {
 
-  const loggeduser = useState({});
+  const [loggeduser, setLogged] = useState(false);
 
+  const user = userService.get();
+
+  useEffect(() => {
+    console.log(user)
+    if (user != null) 
+      setLogged(true)
+  },[])
 
   const onSignOut = () =>{
-    // dispatch(logoutAction());
+    userService.logout()
+    setLogged(false)
   }
 
   return (
@@ -30,7 +39,7 @@ const TopBar = () => {
             123 - 456 - 789
           </div>
         </div>
-        { loggeduser == null ?
+        { !loggeduser ?
           <div className='d-flex links'>
             <Link to="/login">Sign In</Link>
             <Link to="/register">Sign Up</Link>

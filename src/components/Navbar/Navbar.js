@@ -17,12 +17,12 @@ const Navbar = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                 <NavLink className="nav-link" to="/text-books">TEXT BOOKS</NavLink>
                 </li>
                 <li className="nav-item">
                 <NavLink className="nav-link" to="/e-books">E-BOOKS</NavLink>
-                </li>
+                </li> */}
                 <li className="nav-item">
                 <NavLink className="nav-link" to="/about">ABOUT US</NavLink>
                 </li>
@@ -30,7 +30,7 @@ const Navbar = () => {
                 <NavLink className="nav-link" to="/contact">CONTACT US</NavLink>
                 </li>
                 <li className="nav-item">
-                <NavLink className="nav-link" to="/faq">FAQ</NavLink>
+                <NavLink className="nav-link" to="/faq">ADMIN</NavLink>
                 </li>
             </ul>
             <div className='form'>
