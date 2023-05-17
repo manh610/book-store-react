@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import './style.css';
-import { useDispatch } from 'react-redux';
-import { registerAction , loginAction } from '../../redux/actions/actions';
 import { Redirect } from 'react-router-dom';
 
 
 const Register = () => {
 
     const [ newname , setName ]= useState('');
-    const [ newemail , setEmail ]= useState('');
     const [ newpassword , setPassword ]= useState('');
     const [ confirm , setConfirm ] = useState('')
     const [ registered , setRegistered ] = useState(false);
-
-    const dispatch = useDispatch();
 
     const SignUp = () =>{
 
@@ -21,7 +16,6 @@ const Register = () => {
 
             const payload = {
                 name:newname,
-                email:newemail,
                 password:newpassword,
                 loved:[],
                 bought:[],
@@ -29,9 +23,7 @@ const Register = () => {
             };
         
             console.log(payload);
-            dispatch(registerAction(payload));
             alert('registered successfully');
-            dispatch(loginAction(payload));  
             alert('logged in succefully');  
             setRegistered(true);
             return null
@@ -50,8 +42,8 @@ const Register = () => {
                     <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Enter Name" onChange={e=>setName(e.target.value)} />
                 </div>
                 <div className="col-md-6 my-3">
-                    <label htmlFor="exampleFormControlInput2" className="form-label">Email</label>
-                    <input type="email" className="form-control" id="exampleFormControlInput2" placeholder="Enter Email" onChange={e=>setEmail(e.target.value)} />
+                    {/* <label htmlFor="exampleFormControlInput2" className="form-label">Email</label> */}
+                    {/* <input type="email" className="form-control" id="exampleFormControlInput2" placeholder="Enter Email" onChange={e=>setEmail(e.target.value)} /> */}
                 </div>
                 <div className="col-md-6 mb-3">
                     <label htmlFor="exampleFormControlInput3" className="form-label">Password</label>

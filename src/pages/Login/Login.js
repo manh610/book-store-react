@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginAction , setusersAction } from '../../redux/actions/actions.js';
 import { Redirect } from "react-router-dom";
 import './style.css'
 
 
 const Login = () => {
 
-    const dispatch = useDispatch();
 
-    const users = useSelector(state=>state.usersroot.users);
+    const users = useState({});
 
     const [logged , setloggged ] = useState(false);
     const [ email , setEmail ] = useState('');
     const [ password , setPassword ] = useState('');
-
-    useEffect(()=>{
-        dispatch(setusersAction());
-    },[])
 
     const SignIn = () =>{
         
@@ -26,7 +19,6 @@ const Login = () => {
         if(payload){
             console.log('e7na gwa');
             console.log(payload , 'askjdhshdsahhsakhasdkhdhkadkhdsakhsdahkdsakh');
-            dispatch(loginAction(payload));
             alert('success login page');
             setloggged(true);
             return null;

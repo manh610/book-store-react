@@ -1,51 +1,86 @@
-import React, { useEffect } from 'react';
-import { useSelector , useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import './style.css';
-import {getCurrencyAction, retriveAction} from '../../redux/actions/actions';
 import {Link} from 'react-router-dom';
 
-function Exclusive() {
+const Exclusive = () => {
 
-  const dispatch = useDispatch();
-  const currency = useSelector(state=> state.currencyroot);
-  const bookstate = useSelector(state=>state.booksroot);
+  	const books = [
+		{
+			"id": 1,
+			"title": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "./image/book7.png",
+			"price": 200,
+			"page": 200
+		},
+		{
 
-  useEffect(()=>{  
-    dispatch(retriveAction());
-    dispatch(getCurrencyAction());
-  },[])
+			"id": 2,
+			"title": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "./image/book9.png",
+			"price": 200,
+			"page": 200
+		},
+    	{
 
-  return (
-    <section className='Exclusive'>
-        <div className='container'>
-          <div className='title text-center'>
-            <h2 className='border'>EXCLUSIVE THIS MONTH</h2>
-            <p className='lead'>BOOKS ADDED THIS MONTH</p>
-          </div>  
-            <div className='row p-5 justify-content-center'>
-              { !bookstate.isloading ?
-                bookstate.books.map((book)=>(
-                  book.new &&
-                  (<div className='col-md-4'  key={book.id}>
-                    <Link to={`/book/${book.id}`} className='book-link'>
-                      <div className='d-flex align-items-center book border py-2 my-3 mx-1 px-4'>                        
-                        <div className='col-md-4'>
-                          <img src={book.img} alt='' className="img-fluid"/>
-                        </div>
-                        <div className='book-info col-md-8'>
-                          <h3>{book.name}</h3>
-                          <p>{book.price.map((price)=>{return (price.currency===currency.current?price.amount:"")})}<span> {currency.current}</span></p>
-                        </div>
-                      </div>
-                    </Link>
-                   </div>
-                  ))):
-                <p>no divs</p>
-              }
-            </div>
-        </div>
-    </section>
-  )
+			"id": 3,
+			"title": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "./image/book12.png",
+			"price": 200,
+			"page": 200
+		},
+    	{
+			"id": 4,
+			"title": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "./image/book7.png",
+			"price": 200,
+			"page": 200
+		},
+	]
+
+	const [bookstate, setBookState] = useState(books);
+
+	return (
+		<section className='Exclusive'>
+			<div className='container'>
+			{/* <div className='title text-center'>
+				<h2 className='border'>EXCLUSIVE THIS MONTH</h2>
+				<p className='lead'>BOOKS ADDED THIS MONTH</p>
+			</div>   */}
+				<div className='row p-5 justify-content-center'>
+				{
+					bookstate.map((book)=>(
+					<div className='col-md-4'  key={book.id}>
+						<Link to={`/book/${book.id}`} className='book-link'>
+						<div className='d-flex align-items-center book border py-2 my-3 mx-1 px-4'>                        
+							<div className='col-md-4'>
+							<img src={book.imageUrl} className="img-fluid"/>
+							</div>
+							<div className='book-info col-md-8'>
+							<h3>{book.title}</h3>
+							<p>{book.author}</p>
+							<p>{book.price}</p>
+							</div>
+						</div>
+						</Link>
+					</div>
+					))
+				}
+				</div>
+			</div>
+		</section>
+  	)
 }
 
 export default Exclusive;

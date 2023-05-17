@@ -1,26 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useSelector , useDispatch} from 'react-redux';
 import { Link, Redirect } from "react-router-dom";
-import { retriveAction } from '../../redux/actions/actions';
 import './style.css'
 
 
 const Account = () => {
 
-    const user = useSelector(state=>state.loggedInUserroot);
+    const user = useState({});
 
-    const dispatch = useDispatch();
+    const bookstate = useState();
 
-    const bookstate = useSelector(state=>state.booksroot);
-  
-    useEffect(()=>{  
-      dispatch(retriveAction());
-    },[])
 
     return (
     <section className='account'>
-        { user === null && !bookstate.isloading ?
+        { user === null ?
             <Redirect to="/" replace={true} />:
             <div className='container'>
                 <div className='row py-5 justify-content-center'>

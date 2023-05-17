@@ -1,58 +1,60 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, {useState} from 'react';
 import './style.css';
-import {getCurrencyAction, retriveAction} from '../../redux/actions/actions';
 import {Link} from 'react-router-dom';
 
-class Category extends React.Component{
+const Category  = ({props}) => {
+  const books = [
+		{
+			"id": "1",
+			"name": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "../../assets/book7.png",
+			"price": 200,
+			"page": 200
+		},
+		{
 
-  componentDidMount(){
-    this.props.retrive();
-    this.props.getcurrency();
-  }
+			"id": "2",
+			"name": "book1",
+			"author": "nguyen van a",
+			"date": "2023-15-15",
+			"description": "first book to read",
+			"imageUrl": "../../assets/book7.png",
+			"price": 200,
+			"page": 200
+		},
+	]
 
-  render() {
+	const [bookstate, setBookState] = useState(books);
+
     return (
         <div className='category'>
             <div className='container'>
                 <div className='row'>
                     {
-                        !this.props.bookstate.isloading ?
-                        this.props.bookstate.books.map((book)=>(
-                        book.text === this.props.type &&
-                        (<div className='col-md-4'  key={book.desc}>
+                        bookstate.map((book)=>(
+                        true &&
+                        (<div className='col-md-4'  key={book.description}>
                           <Link to={`/book/${book.id}`} className='book-link'>
                             <div className='d-flex align-items-center book border py-2 my-3 mx-1 px-4'>                        
                               <div className='col-md-4'>
-                                <img src={book.img} alt='' className="img-fluid"/>
+                                <img src={book.imageUrl} alt='' className="img-fluid"/>
                               </div>
                               <div className='book-info col-md-8'>
                                 <h3>{book.name}</h3>
-                                <p>{book.price.map((price)=>{return (price.currency===this.props.currency.current?price.amount:"")})}<span> {this.props.currency.current}</span></p>
+                                <p>{book.price}</p>
                               </div>
                             </div>
                           </Link>
                          </div>
-                        ))):
-                        <p>no divs</p> 
+                        )))
                     }         
                 </div>
             </div>
         </div>
     )
-  }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    bookstate: state.booksroot,
-    currency: state.currencyroot
-  };
-};
-
-const mapDispatchToProps =(dispatch)=> ({
-  retrive: ()=>dispatch(retriveAction()),
-  getcurrency: ()=>dispatch(getCurrencyAction())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default Category;
