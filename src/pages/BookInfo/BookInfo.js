@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './style.css'
 import { useParams } from 'react-router';
 import { Row, Col, Input, Select, Upload, Button, Image, Divider, DatePicker, Modal } from 'antd';
-import { createBookAPI, updateBookAPI } from '../../apis';
+import { createBookAPI, getBookByIdAPI, updateBookAPI } from '../../apis';
 import { userService } from '../../service/user';
 import {toast} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -52,9 +52,32 @@ const BookInfo = () => {
         setImageUrl('./image/'+fileName)
     }
 
+    const getData = async () => {
+        const payload = {id: id}
+        await getBookByIdAPI(payload)
+            .then(res => {
+                if ( res.data.statusCode=='OK' ){
+                    let book = res.data.data;
+                    setTitle(book.title);
+                    setAuthor(book.author)
+                    setDate(book.date)
+                    setPrice(book.price)
+                    setDescription(book.description)
+                    setCategory(book.category)
+                    setPage(book.page)
+                } else {
+                    toast.error(res.data.message,{
+                        position: toast.POSITION.TOP_CENTER
+                    })
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
     useEffect(() => {
         if ( id > 0 ) {
             setTitleButtonAction('Edit');
+            getData()
             setEditable(true)
         } else {
             setTitleButtonAction('Add');
