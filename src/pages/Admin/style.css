@@ -1,0 +1,30 @@
+.content-admin {
+    margin-top: 90px;
+    font-family: 'Roboto Slab', serif;
+}
+
+.btn-add-book {
+    float: right;
+    margin-bottom: 20px;
+    background-color: #0c83d3cc;
+    color: white;
+}
+
+.btn-add-book:hover {
+    background-color: white;
+    color: #0c83d3cc;
+}
+
+.btn-del-book {
+    background-color: red;
+    color: white;
+}
+
+.btn-del-book:hover {
+    background-color: white;
+    
+}
+
+.ant-modal-content {
+    margin-top: 40%;
+}

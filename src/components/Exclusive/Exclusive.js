@@ -1,107 +1,122 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import {Link} from 'react-router-dom';
+import { getBooksAPI } from '../../apis';
 
 const Exclusive = () => {
 
-  	const books = [
-		{
-			"id": 1,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book7.png",
-			"price": 200,
-			"page": 200
-		},
-		{
+  	// const books = [
+	// 	{
+	// 		"id": 1,
+	// 		"title": "book1",
+	// 		"author": "nguyen van a",
+	// 		"date": "2023-15-15",
+	// 		"description": "first book to read",
+	// 		"imageUrl": "./image/book7.png",
+	// 		"price": 200,
+	// 		"page": 200
+	// 	},
+	// 	{
 
-			"id": 2,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book9.png",
-			"price": 200,
-			"page": 200
-		},
-    	{
+	// 		"id": 2,
+	// 		"title": "book1",
+	// 		"author": "nguyen van a",
+	// 		"date": "2023-15-15",
+	// 		"description": "first book to read",
+	// 		"imageUrl": "./image/book9.png",
+	// 		"price": 200,
+	// 		"page": 200
+	// 	},
+    // 	{
 
-			"id": 3,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book12.png",
-			"price": 200,
-			"page": 200
-		},
-    	{
-			"id": 4,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book7.png",
-			"price": 200,
-			"page": 200
-		},
-		{
-			"id": 5,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book7.png",
-			"price": 200,
-			"page": 200
-		},
-		{
+	// 		"id": 3,
+	// 		"title": "book1",
+	// 		"author": "nguyen van a",
+	// 		"date": "2023-15-15",
+	// 		"description": "first book to read",
+	// 		"imageUrl": "./image/book12.png",
+	// 		"price": 200,
+	// 		"page": 200
+	// 	},
+    // 	{
+	// 		"id": 4,
+	// 		"title": "book1",
+	// 		"author": "nguyen van a",
+	// 		"date": "2023-15-15",
+	// 		"description": "first book to read",
+	// 		"imageUrl": "./image/book7.png",
+	// 		"price": 200,
+	// 		"page": 200
+	// 	},
+	// 	{
+	// 		"id": 5,
+	// 		"title": "book1",
+	// 		"author": "nguyen van a",
+	// 		"date": "2023-15-15",
+	// 		"description": "first book to read",
+	// 		"imageUrl": "./image/book7.png",
+	// 		"price": 200,
+	// 		"page": 200
+	// 	},
+	// 	{
 
-			"id": 6,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book9.png",
-			"price": 200,
-			"page": 200
-		},
-    	{
+	// 		"id": 6,
+	// 		"title": "book1",
+	// 		"author": "nguyen van a",
+	// 		"date": "2023-15-15",
+	// 		"description": "first book to read",
+	// 		"imageUrl": "./image/book9.png",
+	// 		"price": 200,
+	// 		"page": 200
+	// 	},
+    // 	{
 
-			"id": 7,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book12.png",
-			"price": 200,
-			"page": 200
-		},
-    	{
-			"id": 8,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book7.png",
-			"price": 200,
-			"page": 200
-		},
-		{
-			"id": 9,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book12.png",
-			"price": 200,
-			"page": 200
-		},
-	]
+	// 		"id": 7,
+	// 		"title": "book1",
+	// 		"author": "nguyen van a",
+	// 		"date": "2023-15-15",
+	// 		"description": "first book to read",
+	// 		"imageUrl": "./image/book12.png",
+	// 		"price": 200,
+	// 		"page": 200
+	// 	},
+    // 	{
+	// 		"id": 8,
+	// 		"title": "book1",
+	// 		"author": "nguyen van a",
+	// 		"date": "2023-15-15",
+	// 		"description": "first book to read",
+	// 		"imageUrl": "./image/book7.png",
+	// 		"price": 200,
+	// 		"page": 200
+	// 	},
+	// 	{
+	// 		"id": 9,
+	// 		"title": "De men phieu luu ki",
+	// 		"author": "nguyen van a",
+	// 		"date": "2023-15-15",
+	// 		"description": "first book to read",
+	// 		"imageUrl": "./image/book12.png",
+	// 		"price": 200,
+	// 		"page": 200
+	// 	},
+	// ]
 
-	const [bookstate, setBookState] = useState(books);
+	const [bookstate, setBookState] = useState();
+
+	const getDataBook = async () => {
+		await getBooksAPI()
+			.then(res => {
+				if ( res.data.statusCode=='OK' ) {
+					setBookState(res.data.data);
+				}
+			})
+			.catch(err => console.log(err))
+	}
+
+	useEffect(() => {
+		getDataBook()
+	},[])
 
 	return (
 		<section className='Exclusive'>
@@ -122,7 +137,6 @@ const Exclusive = () => {
 							<div className='book-info col-md-8'>
 							<h3>{book.title}</h3>
 							<p>{book.author}</p>
-							<p>{book.price}</p>
 							</div>
 						</div>
 						</Link>

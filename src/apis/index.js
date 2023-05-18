@@ -6,7 +6,9 @@ const URL_API = `http://localhost:${PORT}`
 // book api
 export const getBooksAPI = async() => axios.get(`${URL_API}/book/getAll`);
 
-export const getBookByIdAPI = async(id) => axios.get(`${URL_API}/book/`, {id: id});
+export const getBookByIdAPI = async(payload) => axios.post(`${URL_API}/book/getInfo`, payload);
+
+export const createBookAPI = async(payload) => axios.post(`${URL_API}/book/create`, payload);
 
 export const updateBookAPI = async(payload) => axios.post(`${URL_API}/book/update`, payload)
 
@@ -26,7 +28,7 @@ export const loginAPI = async(payload) => axios.post(`${URL_API}/user/login`, pa
 // book in cart
 export const addToCartAPI = async(payload) => axios.post(`${URL_API}/bookbill/create`, payload)
 
-export const removeFromCartAPI = async(id) => axios.delete(`${URL_API}/bookbill/delete/${id}`)
+export const removeFromCartAPI = async(payload) => axios.post(`${URL_API}/bookbill/delete`, payload)
 
 export const getBookByUserAPI = async(payload) => axios.post(`${URL_API}/bookbill/user`, payload)
 

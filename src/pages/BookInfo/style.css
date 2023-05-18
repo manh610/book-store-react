@@ -1,0 +1,40 @@
+.select-category {
+    width: 250px;
+}
+
+.title-page {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.content-book-info {
+    margin-top: 30px;
+}
+
+.title-page-content {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.space {
+    margin-top: 20px
+}
+
+.upload {
+    margin-top: 8px;
+}
+
+.line {
+    height: 1px;
+    background-color: rgb(29, 28, 28);
+}
+
+.btn-action {
+    float: right;
+    margin-right: 30px;
+}

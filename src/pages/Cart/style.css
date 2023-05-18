@@ -13,3 +13,11 @@
 .cart-books img{
     max-width: 150;
 }
+
+.price {
+    margin-top: -20px;
+}
+
+.btn-remove {
+    margin-top: -35px
+}

@@ -1,88 +1,132 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import { useParams } from 'react-router';
-import { Button, Comment, Form, Input, List, Image} from 'antd';
-import moment from 'moment';
+import { Button, Form, Input, List, Image} from 'antd';
+import { Comment } from '@ant-design/compatible'
+import { userService } from '../../service/user'
+import { addToCartAPI, createCommentAPI, getBookByIdAPI, getCommentByBookAPI } from '../../apis';
+import {toast} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 const { TextArea } = Input;
 
 const Book = () => {
+
+	toast.configure();
+
 	const { id } = useParams();
 
-	let styleLove;
-	let styleBuy;
-
 	const [comments, setComments] = useState([]);
-	const [value, setValue] = useState('');
-	const handleSubmit = () => {
-		if (!value) return;
-		setValue('');
-		setComments([
-			...comments,
-			{
-				avatar: <Image preview={false} style={{paddingRight: 10, marginTop: 4}} width={50} src="./image/user.png" alt="Han Solo" />,
-				author: 'Han Solo',
-				content: <p>{value}</p>,
-				// datetime: moment('2016-11-22').fromNow(),
-			},
-		]);
-	};
-	const init = {
-		"id": 1,
-		"title": "book1",
-		"author": "nguyen van a",
-		"date": "2023-15-15",
-		"description": "first book to read",
-		"imageUrl": "./image/book7.png",
-		"price": 200,
-		"page": 200
+	const [contentComment, setContentComment] = useState('');
+
+	const user = userService.get();
+
+	const [book, setBookState] = useState();
+
+	const getDataBookById = async () => {
+		const payload = { id: id }
+		await getBookByIdAPI(payload)
+			.then(res => {
+				setBookState(res.data.data)
+			})
+			.catch(error => console.log(error))
 	}
 
-	const books = [
-		{
-			"id": 1,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book7.png",
-			"price": 200,
-			"page": 200
-		},
-		{
+	const getDataCommentByBook = async () => {
+		const payload = {id: id}
+		await getCommentByBookAPI(payload)
+			.then(res => {
+				let data = res.data.data;
+				let tmp = [];
+				for (let i = 0; i < data.length; i++) {
+					tmp.push({
+						avatar: <Image preview={false} style={{marginTop: 4}} width={50} src="./image/user.png" alt={data[i].user.fullName} />,
+						author: data[i].user.fullName,
+						content: <p>{data[i].content}</p>,
+						// datetime: moment('2016-11-22').fromNow(),
+					})
+				}
+				setComments(tmp)
+			})
+			.catch(err => console.log(err))
+	}
 
-			"id": 2,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book9.png",
-			"price": 200,
-			"page": 200
-		},
-    	{
+	useEffect(() => {
+		getDataBookById();
+		getDataCommentByBook();
+	}, [])
 
-			"id": 3,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book12.png",
-			"price": 200,
-			"page": 200
-		},
-    	{
-			"id": 4,
-			"title": "book1",
-			"author": "nguyen van a",
-			"date": "2023-15-15",
-			"description": "first book to read",
-			"imageUrl": "./image/book7.png",
-			"price": 200,
-			"page": 200
-		},
-	]
+	const handleAddComment = async () => {
+		const payload = {
+			content: contentComment,
+			bookId: id,
+			userId: user.id
+		}
+		await createCommentAPI(payload)
+			.then(res => {
+				if ( res.data.statusCode=='OK' ) {
+					getDataCommentByBook();
+				}
+			})
+			.catch(err => console.log(err))
+	}
 
-	const [book, setBookState] = useState(init);
+	const handleSubmit = () => {
+		if ( !contentComment ) return;
+		if ( user==null ) {
+			toast.error('Bạn cần đăng nhập trước khi để lại bình luận', {
+				position: toast.POSITION.TOP_CENTER
+			});
+			return;
+		}
+		handleAddComment();
+		setContentComment('');
+	};
+
+	// const init = {
+	// 	"id": 1,
+	// 	"title": "book1",
+	// 	"author": "nguyen van a",
+	// 	"date": "2023-15-15",
+	// 	"description": "first book to read",
+	// 	"imageUrl": "./image/book7.png",
+	// 	"price": 200,
+	// 	"page": 200
+	// }
+
+	const [amount, setAmount] = useState(1)
+
+	const handleMinus = () => {
+		if (amount==1)
+			return;
+		setAmount(amount => amount-1)
+	}
+	const handlePlus = () => {
+		setAmount(amount => amount+1)
+	}
+
+	const addToCart = async () => {
+		if ( user==null ) {
+			toast.error('Bạn cần đăng nhập trước khi để lại bình luận', {
+				position: toast.POSITION.TOP_CENTER
+			});
+			return;
+		}
+		const payload = {
+			amount: amount,
+			userId: user.id,
+			bookId: id
+		}
+		await addToCartAPI(payload)
+			.then(res => {
+				if ( res.data.statusCode=='OK' ){
+					toast.success('Thêm vào giỏ hàng thành công', {
+						position: toast.POSITION.TOP_CENTER
+					})
+				}
+			})	
+			.catch(err => console.log(err))
+	}
 
 	return (
 		<section className='one-book'>
@@ -94,15 +138,21 @@ const Book = () => {
 					<div className='col-md-7 info d-flex'>
 						<div className='align-self-center'>
 							<h3>{book.title}</h3>
-							<p>{book.description}</p>
-							<p>Price: 200</p>
+							<p>Tác giả: {book.author}</p>
+							<p>Mô tả: {book.description}</p>
+							<p>Ngày phát hành: {book.date}</p>
+							<p>Số trang: {book.page}</p>
+							<p>Giá: {book.price}</p>
 							<div className='d-flex'>
-								<button style={styleLove} className='btn btn-outline-secondary love me-3'>
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
-										<path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-									</svg>
-								</button>
-								<button style={styleBuy} className='btn btn-outline-secondary buy'>
+								<table className='amount border-class'>
+									<tr>
+										<td className='minus-plus border-class' onClick={handleMinus} > - </td>
+										<td><Input className='input-amount' min={1} onChange={(e) => setAmount(e.target.value)} width={40} value={amount} bordered={false} /></td>
+										<td className='minus-plus border-class' onClick={handlePlus}> + </td>
+									</tr>
+								</table>
+
+								<button onClick={addToCart} className='btn btn-outline-secondary buy'>
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-basket" viewBox="0 0 16 16">
 										<path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
 									</svg> 
@@ -112,28 +162,27 @@ const Book = () => {
 					</div>
 				</div>
 				<div className='comment'>
-					<List
-						className='list-comment'
-						dataSource={comments}
-						header="Nhận xét: "
-						itemLayout="horizontal"
-						renderItem={(props) => <Comment {...props} />}
-					/>
 					<Comment
 						className='com'
-						// avatar={<Image preview={false} width={30} src="./image/user.png" alt="Han Solo" />}
 						content={
 							<div>
 								<Form.Item>
-									<TextArea style={{width: '900px'}} rows={3} onChange={(e) => setValue(e.target.value)} value={value} />
+									<TextArea style={{width: '900px'}} rows={3} onChange={(e) => setContentComment(e.target.value)} value={contentComment} />
 								</Form.Item>
 								<Form.Item>
-									<Button onClick={handleSubmit} className='btnAddCom'>
+									<Button onClick={handleSubmit} className='btnAddcom' type='primary'>
 										Thêm nhận xét
 									</Button>
 								</Form.Item>
 							</div>
 						}
+					/>
+					<List
+						className='list-comment'
+						dataSource={comments}
+						header="Nhận xét, đánh giá từ khách hàng: "
+						itemLayout="horizontal"
+						renderItem={(props) => <Comment {...props} />}
 					/>
 				</div>
 			</div>

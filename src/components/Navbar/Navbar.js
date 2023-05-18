@@ -4,7 +4,7 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <nav className="navbar sticky-top navbar-expand-lg navbar-light">
+    <nav className="navbar navbar-expand-lg navbar-light">
         <div className="container">
             <NavLink className="navbar-brand" to="/" exact>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-house-fill" viewBox="0 0 16 16">
@@ -17,12 +17,6 @@ const Navbar = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                {/* <li className="nav-item">
-                <NavLink className="nav-link" to="/text-books">TEXT BOOKS</NavLink>
-                </li>
-                <li className="nav-item">
-                <NavLink className="nav-link" to="/e-books">E-BOOKS</NavLink>
-                </li> */}
                 <li className="nav-item">
                 <NavLink className="nav-link" to="/about">ABOUT US</NavLink>
                 </li>
@@ -30,7 +24,7 @@ const Navbar = () => {
                 <NavLink className="nav-link" to="/contact">CONTACT US</NavLink>
                 </li>
                 <li className="nav-item">
-                <NavLink className="nav-link" to="/faq">ADMIN</NavLink>
+                <NavLink className="nav-link" to="/admin">ADMIN</NavLink>
                 </li>
             </ul>
             <div className='form'>
