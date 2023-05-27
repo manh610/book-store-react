@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import { useParams } from 'react-router';
-import { Button, Form, Input, List, Image} from 'antd';
+import { Button, Form, Input, List, Image, Rate} from 'antd';
 import { Comment } from '@ant-design/compatible'
 import { userService } from '../../service/user'
-import { addToCartAPI, createCommentAPI, getBookByIdAPI, getCommentByBookAPI } from '../../apis';
+import { addToCartAPI, createCommentAPI, getBookByIdAPI, getCommentByBookAPI, getRateByBookAPI } from '../../apis';
 import {toast} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { createRateAPI } from '../../apis';
 
 const { TextArea } = Input;
 
@@ -20,8 +21,18 @@ const Book = () => {
 	const [contentComment, setContentComment] = useState('');
 
 	const user = userService.get();
-
-	const [book, setBookState] = useState();
+	
+	const init = {
+		"id": 1,
+		"title": "book1",
+		"author": "nguyen van a",
+		"date": "2023-15-15",
+		"description": "first book to read",
+		"imageUrl": "./image/book7.png",
+		"price": 200,
+		"page": 200
+	}
+	const [book, setBookState] = useState(init);
 
 	const getDataBookById = async () => {
 		const payload = { id: id }
@@ -30,6 +41,28 @@ const Book = () => {
 				setBookState(res.data.data)
 			})
 			.catch(error => console.log(error))
+	}
+
+	const [rateBook, setRateBook] = useState(0);
+	const [quantityRate, setQuantityRate] = useState(0);
+	const [rateUser, setRateUser] = useState(0)
+
+	const getDataRateByBook = async () => {
+		const payload = {id: id}
+		await getRateByBookAPI(payload)
+			.then(res => {
+				let data = res.data.data;
+				let tmp = 0;
+				for ( let i = 0; i < data.length; i++ ){
+					tmp += data[i].rate
+					if ( user && data[i].user.id==user.id )
+						setRateUser(data[i].rate)
+				}
+				tmp /= data.length;
+				setRateBook(tmp)
+				setQuantityRate(data.length)
+			})
+			.catch(err => console.log(err))
 	}
 
 	const getDataCommentByBook = async () => {
@@ -54,6 +87,7 @@ const Book = () => {
 	useEffect(() => {
 		getDataBookById();
 		getDataCommentByBook();
+		getDataRateByBook();
 	}, [])
 
 	const handleAddComment = async () => {
@@ -83,16 +117,7 @@ const Book = () => {
 		setContentComment('');
 	};
 
-	// const init = {
-	// 	"id": 1,
-	// 	"title": "book1",
-	// 	"author": "nguyen van a",
-	// 	"date": "2023-15-15",
-	// 	"description": "first book to read",
-	// 	"imageUrl": "./image/book7.png",
-	// 	"price": 200,
-	// 	"page": 200
-	// }
+	
 
 	const [amount, setAmount] = useState(1)
 
@@ -107,7 +132,7 @@ const Book = () => {
 
 	const addToCart = async () => {
 		if ( user==null ) {
-			toast.error('Bạn cần đăng nhập trước khi để lại bình luận', {
+			toast.error('Bạn cần đăng nhập trước khi mua hàng', {
 				position: toast.POSITION.TOP_CENTER
 			});
 			return;
@@ -128,6 +153,24 @@ const Book = () => {
 			.catch(err => console.log(err))
 	}
 
+	const handleRateBook = async (value) => {
+		console.log('rate')
+		const payload = {
+			rate: value,
+			bookId: book.id,
+			userId: user.id
+		}
+		console.log(payload)
+		await createRateAPI(payload)
+			.then(res => {
+				if ( res.data.statusCode=='OK') {
+					console.log(res.data.data)
+					getDataRateByBook()
+				}
+			})
+			.catch(err => console.log(err))
+	}
+
 	return (
 		<section className='one-book'>
 			<div className='container'>
@@ -140,9 +183,10 @@ const Book = () => {
 							<h3>{book.title}</h3>
 							<p>Tác giả: {book.author}</p>
 							<p>Mô tả: {book.description}</p>
-							<p>Ngày phát hành: {book.date}</p>
+							<p>Ngày phát hành: {new Date(book.date).toLocaleDateString()}</p>
 							<p>Số trang: {book.page}</p>
 							<p>Giá: {book.price}</p>
+							<Rate  style={{marginBottom: 20}} allowHalf disabled value={rateBook} /> {rateBook.toFixed(1)} điểm / {quantityRate} người đánh giá
 							<div className='d-flex'>
 								<table className='amount border-class'>
 									<tr>
@@ -173,6 +217,7 @@ const Book = () => {
 									<Button onClick={handleSubmit} className='btnAddcom' type='primary'>
 										Thêm nhận xét
 									</Button>
+									<Rate onChange={(value) => handleRateBook(value)} style={{marginBottom: 20, float: 'right'}} value={rateUser} disabled={user==null} />
 								</Form.Item>
 							</div>
 						}

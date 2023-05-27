@@ -6,6 +6,7 @@ import { createBookAPI, getBookByIdAPI, updateBookAPI } from '../../apis';
 import { userService } from '../../service/user';
 import {toast} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
 
 const { TextArea } = Input;
 
@@ -65,6 +66,8 @@ const BookInfo = () => {
                     setDescription(book.description)
                     setCategory(book.category)
                     setPage(book.page)
+                    setImageUrl(book.imageUrl)
+                    
                 } else {
                     toast.error(res.data.message,{
                         position: toast.POSITION.TOP_CENTER
@@ -91,6 +94,7 @@ const BookInfo = () => {
 
     const handleAction = () => {
         if ( titleButtonAction=='Edit' ) {
+            setDate('04/04/2023')
             setEditable(false)
             setTitleButtonAction('Save')
             return;
@@ -104,24 +108,29 @@ const BookInfo = () => {
     }
 
     const handleSave = async () => {
+        const t = date.split("/")
+        const b = new Date(`${t[2]}-${t[1]}-${t[0]}`).toISOString()
         const payload = {
             id: id,
             title: title,
             category: category,
             author: author,
-            date: date,
-            userId: user.id,
+            date: b,
             page: page,
             sold: 0,
             price: price,
             imageUrl: imageUrl,
             description: description
         }
+
+        console.log(payload)
         await updateBookAPI(payload)
             .then(res => {
                 if ( res.data.statusCode=='OK' ) {
-                    toast.success('Tạo sách thành công');
-                    clearInput()
+                    toast.success('Cập nhật sách thành công');
+                    getData()
+                    setEditable(true)
+                    setTitleButtonAction('Edit')
                 } else {
                     toast.error(res.data.message, {
                         position: toast.POSITION.TOP_CENTER
@@ -134,11 +143,13 @@ const BookInfo = () => {
     const user = userService.get();
 
     const handleAddBook = async () => {
+        const t = date.split("/")
+        const b = new Date(`${t[2]}-${t[1]}-${t[0]}`).toISOString()
         const payload = {
             title: title,
             category: category,
             author: author,
-            date: date,
+            date: b,
             userId: user.id,
             page: page,
             sold: 0,
@@ -151,6 +162,7 @@ const BookInfo = () => {
                 if ( res.data.statusCode=='OK' ) {
                     toast.success('Tạo sách thành công');
                     clearInput()
+                    handleClose()
                 } else {
                     toast.error(res.data.message, {
                         position: toast.POSITION.TOP_CENTER
@@ -168,6 +180,7 @@ const BookInfo = () => {
         setDescription('')
         setCategory('')
         setPage('')
+        setImageUrl('')
     }
 
     const onSelectDate = (date, dateString) => {
@@ -208,7 +221,7 @@ const BookInfo = () => {
                     <Row>
                         <Col span={10}>
                             <p className='bold space'>Ngày phát hành <span style={{color: 'red'}}>*</span></p>
-                            <DatePicker className='select-category' defaultValue={date} disabled={editable} onChange={onSelectDate} format={dateFormat} />
+                            <DatePicker className='select-category' disabled={editable} onChange={onSelectDate} format={dateFormat} />
                         </Col>
                         <Col span={4}></Col>
                         <Col span={10}>

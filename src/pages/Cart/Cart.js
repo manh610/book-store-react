@@ -127,7 +127,7 @@ function Cart() {
 										X 
 									</div>
 									<div className='col-md-3'>
-										<h4>{bookCart.book.amount}</h4>
+										<h4>{bookCart.amount}</h4>
 									</div>
 									<div className='col-md-1'>
 										<h4 className='price text-success position-absolute'>{bookCart.book.price * bookCart.amount}</h4>

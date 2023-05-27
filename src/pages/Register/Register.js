@@ -29,6 +29,7 @@ const Register = () => {
                 if ( res.data.statusCode=='OK' ) {
                     userService.set(res.data.data);
                     setRegisted(true);
+                    localStorage.removeItem("check")
                 } else {
                     toast.error(res.data.message, {
                         position: toast.POSITION.TOP_CENTER

@@ -10,8 +10,6 @@ const Login = () => {
 
     toast.configure();
 
-    // const navigate = useNavigate();
-
     const [logged , setloggged ] = useState(false);
     const [ username , setUsername ] = useState('');
     const [ password , setPassword ] = useState('');
@@ -27,6 +25,7 @@ const Login = () => {
                 if ( res.data.statusCode == 'OK') {
                     userService.set(res.data.data)
                     setloggged(true)
+                    localStorage.removeItem("check")
                 } else {
                     toast.error(res.data.message, {
                         position: toast.POSITION.TOP_CENTER

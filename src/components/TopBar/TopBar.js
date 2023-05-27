@@ -18,6 +18,7 @@ const TopBar = () => {
 
   const onSignOut = () =>{
     userService.logout()
+    window.location.reload()
     setLogged(false)
   }
 

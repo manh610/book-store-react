@@ -24,8 +24,8 @@ const column = [
     },
     {
         title: 'Date',
-        dataIndex: 'date',
-        key: 'date'
+        dataIndex: 'date1',
+        key: 'date1'
     },
     {
         title: 'Page',
@@ -51,14 +51,16 @@ const column = [
 
 const Admin = () => {
     
-    // const initUser = {
-    //     id: 1,
-    //     username: 'manh610',
-    //     role: 'USER'
-    // }
-    // const user = {...initUser};
+    const initUser = {
+        id: 1,
+        username: 'manh610',
+        role: 'USER'
+    }
+    
 
-    const user = userService.get();
+    const user = userService.get() || initUser;
+
+    console.log(user)
 
 
     // const bookData = [
@@ -200,11 +202,12 @@ const Admin = () => {
                     for ( let i = 0; i < data.length; i++) {
                         tmp.push({
                             ...data[i],
+                            date1: new Date(data[i].date).toLocaleDateString(),
                             actionView: user.role=='ADMIN'?<Link to={`/manage-book/${data[i].id}`}><Button className="btn-view-book">View</Button></Link>:null,
                             actionDel: user.role=='ADMIN'?<Button onClick={() => handleOpen(data[i].id)} className="btn-del-book">Delete</Button>:null,
                         })
                     }
-                    setBooks(res.data.data)
+                    setBooks(tmp)
                 }
             })
     }
@@ -216,6 +219,7 @@ const Admin = () => {
             .then(res => {
                 if ( res.data.statusCode=='OK' ) {
                     getDataBook();
+                    handleClose()
                 }
             })
             .catch(err => console.log(err))
