@@ -2,34 +2,21 @@ import React, { useEffect, useState } from 'react';
 import './style.css'
 import { useParams } from 'react-router';
 import { Row, Col, Input, Select, Upload, Button, Image, Divider, DatePicker, Modal } from 'antd';
-import { createBookAPI, getBookByIdAPI, updateBookAPI } from '../../apis';
+import { createBookAPI, getAllCategoryAPI, getBookByIdAPI, updateBookAPI } from '../../apis';
 import { userService } from '../../service/user';
 import {toast} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import moment from "moment";
+import { Redirect } from 'react-router-dom';
 
 const { TextArea } = Input;
-
-const listCategory = [
-    {
-        value: 'Truyện ngắn',
-        label: 'Truyện ngắn',
-    },
-    {
-        value: 'Tiểu thuyết',
-        label: 'Tiểu thuyết',
-    },
-    {
-        value: 'Truyện tranh',
-        label: 'Truyện tranh',
-    }
-]
 
 const BookInfo = () => {
 
     toast.configure();
 
     const { id } = useParams()
+
+    const [backToAdmin, setBackToAdmin] = useState(false);
 
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
@@ -40,10 +27,29 @@ const BookInfo = () => {
     const [imageUrl, setImageUrl] = useState('')
     const [price, setPrice] = useState('')
 
+    const [listCategory, setListCategory] = useState([]);
+
+    const getAllCategory = async () => {
+        await getAllCategoryAPI()
+            .then(res => {
+                let data = res.data.data;
+                let tmp = [];
+                for ( let i = 0; i < data.length; i++) {
+                    tmp.push({
+                        value: data[i].id,
+                        label: data[i].name
+                    })
+                }
+                setListCategory(tmp);
+            })
+            .catch(err => console.log(err))
+
+    }
+
     const dateFormat = 'DD/MM/YYYY';
 
     const handleChooseCategory = (option) => {
-        setCategory(option.label)
+        setCategory(option)
     }
 
     const handleChooseImage = (e) => {
@@ -59,12 +65,13 @@ const BookInfo = () => {
             .then(res => {
                 if ( res.data.statusCode=='OK' ){
                     let book = res.data.data;
+                    console.log(book)
                     setTitle(book.title);
                     setAuthor(book.author)
                     setDate(book.date)
                     setPrice(book.price)
                     setDescription(book.description)
-                    setCategory(book.category)
+                    setCategory(book.category.id)
                     setPage(book.page)
                     setImageUrl(book.imageUrl)
                     
@@ -78,6 +85,7 @@ const BookInfo = () => {
     }
 
     useEffect(() => {
+        getAllCategory();
         if ( id > 0 ) {
             setTitleButtonAction('Edit');
             getData()
@@ -99,7 +107,15 @@ const BookInfo = () => {
             setTitleButtonAction('Save')
             return;
         } 
+        const check = checkValidate();
+        if ( check==false ) {
+            toast.error('Bạn cần điền đầy đủ thông tin', {
+                position: toast.POSITION.TOP_CENTER
+            })
+            return;
+        }
         if ( titleButtonAction=='Add') {
+           
             handleOpen();
         }
         if ( titleButtonAction=='Save') {
@@ -113,7 +129,7 @@ const BookInfo = () => {
         const payload = {
             id: id,
             title: title,
-            category: category,
+            categoryId: category,
             author: author,
             date: b,
             page: page,
@@ -131,6 +147,7 @@ const BookInfo = () => {
                     getData()
                     setEditable(true)
                     setTitleButtonAction('Edit')
+                    setBackToAdmin(true);
                 } else {
                     toast.error(res.data.message, {
                         position: toast.POSITION.TOP_CENTER
@@ -147,7 +164,7 @@ const BookInfo = () => {
         const b = new Date(`${t[2]}-${t[1]}-${t[0]}`).toISOString()
         const payload = {
             title: title,
-            category: category,
+            categoryId: category,
             author: author,
             date: b,
             userId: user.id,
@@ -157,12 +174,14 @@ const BookInfo = () => {
             imageUrl: imageUrl,
             description: description
         }
+        console.log(payload)
         await createBookAPI(payload)
             .then(res => {
                 if ( res.data.statusCode=='OK' ) {
                     toast.success('Tạo sách thành công');
                     clearInput()
                     handleClose()
+                    setBackToAdmin(true);
                 } else {
                     toast.error(res.data.message, {
                         position: toast.POSITION.TOP_CENTER
@@ -170,6 +189,12 @@ const BookInfo = () => {
                 }
             })
             .catch(err => console.log(err))
+    }
+
+    const checkValidate = () => {
+        if ( title=='' || author=='' || date=='' || price=='' || description=='' || category=='' || page=='' || imageUrl=='')
+            return false;
+        return true;
     }
 
     const clearInput = () => {
@@ -235,7 +260,6 @@ const BookInfo = () => {
                             <Select 
                                 disabled = {editable}
                                 className='select-category'
-                                labelInValue
                                 value={category}
                                 onChange={handleChooseCategory}
                                 options={listCategory}
@@ -272,6 +296,9 @@ const BookInfo = () => {
                 onOk={handleOk} 
                 onCancel={handleClose}>
             </Modal>
+            {
+                backToAdmin && <Redirect  to="/admin" replace={true}/>
+            }
         </div>
     )
 }

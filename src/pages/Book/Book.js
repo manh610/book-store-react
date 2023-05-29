@@ -8,6 +8,7 @@ import { addToCartAPI, createCommentAPI, getBookByIdAPI, getCommentByBookAPI, ge
 import {toast} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { createRateAPI } from '../../apis';
+import { Redirect }  from 'react-router-dom'
 
 const { TextArea } = Input;
 
@@ -117,7 +118,7 @@ const Book = () => {
 		setContentComment('');
 	};
 
-	
+	const [linktoCart, setLinkToCart] = useState(false);
 
 	const [amount, setAmount] = useState(1)
 
@@ -148,6 +149,7 @@ const Book = () => {
 					toast.success('Thêm vào giỏ hàng thành công', {
 						position: toast.POSITION.TOP_CENTER
 					})
+					setLinkToCart(true)
 				}
 			})	
 			.catch(err => console.log(err))
@@ -186,7 +188,7 @@ const Book = () => {
 							<p>Ngày phát hành: {new Date(book.date).toLocaleDateString()}</p>
 							<p>Số trang: {book.page}</p>
 							<p>Giá: {book.price}</p>
-							<Rate  style={{marginBottom: 20}} allowHalf disabled value={rateBook} /> {rateBook.toFixed(1)} điểm / {quantityRate} người đánh giá
+							<Rate  style={{marginBottom: 20}} allowHalf disabled value={rateBook} /> { quantityRate > 0 ? <p>{rateBook.toFixed(1)} điểm / {quantityRate} người đánh giá</p>: <p>Chưa có người đánh giá</p> }
 							<div className='d-flex'>
 								<table className='amount border-class'>
 									<tr>
@@ -230,6 +232,7 @@ const Book = () => {
 						renderItem={(props) => <Comment {...props} />}
 					/>
 				</div>
+				{ linktoCart && <Redirect to='/cart' replace={true} />}
 			</div>
 		</section>
 	)

@@ -30,7 +30,7 @@ export const addToCartAPI = async(payload) => axios.post(`${URL_API}/bookbill/cr
 
 export const removeFromCartAPI = async(payload) => axios.post(`${URL_API}/bookbill/delete`, payload)
 
-export const getBookByUserAPI = async(payload) => axios.post(`${URL_API}/bookbill/user`, payload)
+export const getBookByUserAPI = async(payload) => axios.post(`${URL_API}/bookbill/user/cart`, payload)
 
 
 
@@ -51,3 +51,20 @@ export const createRateAPI = async(payload) => axios.post(`${URL_API}/rate`, pay
 export const getRateByBookAPI = async(payload) => axios.post(`${URL_API}/rate/book`, payload)
 
 export const getRateByUSerAPI = async(payload) => axios.post(`${URL_API}/rate/user`, payload)
+
+
+
+
+// category
+export const getAllCategoryAPI = async() => axios.get(`${URL_API}/category/getAll`)
+
+
+
+
+// bill
+export const createBillAPI = async(payload) => axios.post(`${URL_API}/bill`, payload)
+
+export const getBillByUserAPI = async(payload) => axios.post(`${URL_API}/bill/user`, payload)
+
+
+

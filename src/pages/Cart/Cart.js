@@ -1,61 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import empty from '../../assets/empty_cart.svg';
 import './style.css';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { userService } from '../../service/user';
-import { getBookByUserAPI, removeFromCartAPI } from '../../apis';
-import { Modal } from 'antd'
+import { createBillAPI, getBookByUserAPI, removeFromCartAPI } from '../../apis';
+import { Modal, Button } from 'antd';
+import {toast} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function Cart() {
 
-    // const books = [
-	// 	{
-	// 		"id": 1,
-	// 		"title": "book1",
-	// 		"author": "nguyen van a",
-	// 		"date": "2023-15-15",
-	// 		"description": "first book to read",
-	// 		"imageUrl": "./image/book7.png",
-	// 		"price": 200,
-	// 		"page": 200,
-	// 		"amount" : 1
-	// 	},
-	// 	{
-
-	// 		"id": 2,
-	// 		"title": "book1",
-	// 		"author": "nguyen van a",
-	// 		"date": "2023-15-15",
-	// 		"description": "first book to read",
-	// 		"imageUrl": "./image/book9.png",
-	// 		"price": 200,
-	// 		"page": 200,
-	// 		"amount" : 2
-	// 	},
-    // 	{
-
-	// 		"id": 3,
-	// 		"title": "book1",
-	// 		"author": "nguyen van a",
-	// 		"date": "2023-15-15",
-	// 		"description": "first book to read",
-	// 		"imageUrl": "./image/book12.png",
-	// 		"price": 200,
-	// 		"page": 200,
-	// 		"amount" : 1
-	// 	},
-    // 	{
-	// 		"id": 4,
-	// 		"title": "book1",
-	// 		"author": "nguyen van a",
-	// 		"date": "2023-15-15",
-	// 		"description": "first book to read",
-	// 		"imageUrl": "./image/book7.png",
-	// 		"price": 200,
-	// 		"page": 200,
-	// 		"amount" : 1
-	// 	},
-	// ]
+	toast.configure()
 
 	const user = userService.get();
 
@@ -83,7 +38,30 @@ function Cart() {
 			})
 		handleClose();
 	}
+
+	const handleBuyBook = async () => {
+		const tmp = [];
+		for ( let i = 0; i < bookstate.length; i++)
+			tmp.push(bookstate[i].id)
+		const payload = {
+			userId: userService.get().id,
+			bookBills: tmp
+		}
+		await createBillAPI(payload)
+			.then(res => {
+				if ( res.data.statusCode=='OK' ) {
+					toast.success('Đặt mua hàng thành công', {
+						position: toast.POSITION.TOP_CENTER
+					})
+					setLinkToAccount(true)
+				}
+			})
+	}
+
+	const [linktoAccount, setLinkToAccount] = useState(false);
+
 	const [open, setOpen] = useState(false);
+	const [openConfirmBuy, setOpenCf] = useState(false);
 
 	const [idRemove, setIdRemove] = useState()
 
@@ -98,6 +76,18 @@ function Cart() {
     const handleOk = () => {
 		removeFromCart()
     }
+
+	const handleOpenBuy = () => {
+		setOpenCf(true)
+	}
+
+	const handleCloseBuy = () => {
+		setOpenCf(false)
+	}
+
+	const handleOkBuy = () => {
+		handleBuyBook();
+	}
 
 	useEffect(() => {
 		getDataCart()
@@ -124,9 +114,12 @@ function Cart() {
 										<p>{bookCart.book.author}</p>
 									</div>
 									<div className='col-md-1'>
+										<h4>{bookCart.book.price}</h4> 
+									</div>
+									<div className='col-md-1'>
 										X 
 									</div>
-									<div className='col-md-3'>
+									<div className='col-md-1'>
 										<h4>{bookCart.amount}</h4>
 									</div>
 									<div className='col-md-1'>
@@ -139,6 +132,7 @@ function Cart() {
                             ))
                         }
                     </div>
+					<Button onClick={handleOpenBuy} className='buy'>Mua hàng</Button>
                 </div>
                 :
                 <div className='empty-cart col-12'>
@@ -153,6 +147,14 @@ function Cart() {
                 onOk={handleOk} 
                 onCancel={handleClose}>
             </Modal>
+
+			<Modal 
+                title="Bạn có chắc chắn muốn đặt mua các sản phẩm trong giỏ hàng" 
+                open={openConfirmBuy} 
+                onOk={handleOkBuy} 
+                onCancel={handleCloseBuy}>
+            </Modal>
+			{ linktoAccount && <Redirect to='/account' replace={true} />}
         </section>
     )
 }

@@ -19,8 +19,8 @@ const column = [
     },
     {
         title: 'Category',
-        dataIndex: 'category',
-        key: 'category'
+        dataIndex: 'categoryName',
+        key: 'categoryName'
     },
     {
         title: 'Date',
@@ -202,6 +202,7 @@ const Admin = () => {
                     for ( let i = 0; i < data.length; i++) {
                         tmp.push({
                             ...data[i],
+                            categoryName: data[i].category.name,
                             date1: new Date(data[i].date).toLocaleDateString(),
                             actionView: user.role=='ADMIN'?<Link to={`/manage-book/${data[i].id}`}><Button className="btn-view-book">View</Button></Link>:null,
                             actionDel: user.role=='ADMIN'?<Button onClick={() => handleOpen(data[i].id)} className="btn-del-book">Delete</Button>:null,

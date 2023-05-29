@@ -1,8 +1,8 @@
-.account h4{
+.hello{
     color: #27ae61;
     text-align: center;
 }
-.account p{
+.title{
     font-size: 22px;
     text-align: center;
 }
@@ -10,6 +10,5 @@
     text-decoration: none;
     color: black;
     font-size: 18px;
-    margin-bottom: 10px;
     margin-right: 10px;
 }

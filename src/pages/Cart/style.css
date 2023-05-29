@@ -21,3 +21,16 @@
 .btn-remove {
     margin-top: -35px
 }
+
+.buy {
+    float: right;
+    color: white;
+    font-weight: 500;
+    background-color: #27ae61;
+    margin-top: 20px
+}
+
+.buy:hover {
+    color: #27ae61;
+    background-color: #ffffff;
+}
