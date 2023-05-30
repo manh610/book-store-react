@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import { useParams } from 'react-router';
-import { Button, Form, Input, List, Image, Rate} from 'antd';
+import { Button, Form, Input, List, Image, Rate, Carousel} from 'antd';
 import { Comment } from '@ant-design/compatible'
 import { userService } from '../../service/user'
-import { addToCartAPI, createCommentAPI, getBookByIdAPI, getCommentByBookAPI, getRateByBookAPI } from '../../apis';
+import { addToCartAPI, createCommentAPI, getBookByIdAPI, getBooksAPI, getCommentByBookAPI, getRateByBookAPI } from '../../apis';
 import {toast} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { createRateAPI } from '../../apis';
-import { Redirect }  from 'react-router-dom'
+import { Redirect, Link }  from 'react-router-dom'
 
 const { TextArea } = Input;
 
@@ -24,22 +24,44 @@ const Book = () => {
 	const user = userService.get();
 	
 	const init = {
-		"id": 1,
+		"id": 0,
 		"title": "book1",
 		"author": "nguyen van a",
 		"date": "2023-15-15",
 		"description": "first book to read",
 		"imageUrl": "./image/book7.png",
 		"price": 200,
-		"page": 200
+		"page": 200,
+		"category" : {
+			id : 0,
+			name : ''
+		}
 	}
-	const [book, setBookState] = useState(init);
+	
+
+	const getRcmBook = async (bookTmp) => {
+		await getBooksAPI()
+			.then(res => {
+				let data = res.data.data;
+				let tmp = [];
+				for ( let i = 0; i < data.length; i++) {
+					if ( data[i].category.id==bookTmp.category.id && data[i].id !== bookTmp.id) {
+						tmp.push(data[i])
+					}
+				}
+				settRcmBook(tmp)
+			})
+			.catch(err => console.log(err))
+	}
+
+	
 
 	const getDataBookById = async () => {
 		const payload = { id: id }
 		await getBookByIdAPI(payload)
 			.then(res => {
 				setBookState(res.data.data)
+				getRcmBook(res.data.data);
 			})
 			.catch(error => console.log(error))
 	}
@@ -77,7 +99,6 @@ const Book = () => {
 						avatar: <Image preview={false} style={{marginTop: 4}} width={50} src="./image/user.png" alt={data[i].user.fullName} />,
 						author: data[i].user.fullName,
 						content: <p>{data[i].content}</p>,
-						// datetime: moment('2016-11-22').fromNow(),
 					})
 				}
 				setComments(tmp)
@@ -90,6 +111,10 @@ const Book = () => {
 		getDataCommentByBook();
 		getDataRateByBook();
 	}, [])
+
+	const [rcmBook, settRcmBook] = useState([]);
+
+	const [book, setBookState] = useState(init);
 
 	const handleAddComment = async () => {
 		const payload = {
@@ -173,6 +198,15 @@ const Book = () => {
 			.catch(err => console.log(err))
 	}
 
+	const [linkBook, setLnkBook] = useState(false);
+	const [urlLink, setUrlLink] = useState('')
+
+	const linkTo = (url) => {
+		setUrlLink(url);
+		setLnkBook(true)
+		window.location.assign(url);
+	}
+
 	return (
 		<section className='one-book'>
 			<div className='container'>
@@ -185,6 +219,7 @@ const Book = () => {
 							<h3>{book.title}</h3>
 							<p>Tác giả: {book.author}</p>
 							<p>Mô tả: {book.description}</p>
+							<p>Thể loại: {book.category.name}</p>							
 							<p>Ngày phát hành: {new Date(book.date).toLocaleDateString()}</p>
 							<p>Số trang: {book.page}</p>
 							<p>Giá: {book.price}</p>
@@ -231,8 +266,29 @@ const Book = () => {
 						itemLayout="horizontal"
 						renderItem={(props) => <Comment {...props} />}
 					/>
+					{rcmBook.length>0 && <h5 style={{margin: '10px 0'}}>Các cuốn sách bạn có thể thích</h5>}
+					<Carousel dotPosition='top' autoplay autoplaySpeed={1500}>
+						{
+							rcmBook.map((book)=>(
+							<div key={book.id}>
+								<Link onClick={() => linkTo(`/book/${book.id}`)} reloadDocument to={`/book/${book.id}`} replace={true} className='book-link'>
+									<div className='d-flex align-items-center border'>                        
+										<div className='col-md-4'>
+											<img src={book.imageUrl} className="img-fluid"/>
+										</div>
+										<div className='book-info col-md-4'>
+											<h3>{book.title}</h3>
+											<p>{book.author}</p>
+										</div>
+									</div>
+								</Link>
+							</div>
+							))
+						}
+					</Carousel>
 				</div>
 				{ linktoCart && <Redirect to='/cart' replace={true} />}
+				{ linkBook && <Redirect to={urlLink} replace={true} />}
 			</div>
 		</section>
 	)

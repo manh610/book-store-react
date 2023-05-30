@@ -67,3 +67,11 @@
 .minus-plus:hover {
     cursor: pointer;
 }
+
+.tmp {
+    width: 85%;
+}
+
+.ant-carousel {
+    width: 80%;
+}

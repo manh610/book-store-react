@@ -7,6 +7,8 @@ import { userService } from '../../service/user';
 import {toast} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { Redirect } from 'react-router-dom';
+import { moment } from 'moment'
+import { parse } from 'date-fns';
 
 const { TextArea } = Input;
 
@@ -68,7 +70,8 @@ const BookInfo = () => {
                     console.log(book)
                     setTitle(book.title);
                     setAuthor(book.author)
-                    setDate(book.date)
+                    setDate((new Date(book.date)).toLocaleDateString('en-GB'))
+                    console.log((new Date(book.date)).toLocaleDateString('en-GB'))
                     setPrice(book.price)
                     setDescription(book.description)
                     setCategory(book.category.id)
@@ -102,7 +105,6 @@ const BookInfo = () => {
 
     const handleAction = () => {
         if ( titleButtonAction=='Edit' ) {
-            setDate('04/04/2023')
             setEditable(false)
             setTitleButtonAction('Save')
             return;
@@ -209,6 +211,7 @@ const BookInfo = () => {
     }
 
     const onSelectDate = (date, dateString) => {
+        console.log(dateString)
         setDate(dateString)
     }
 
