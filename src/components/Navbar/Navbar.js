@@ -1,8 +1,9 @@
 import './style.css'
 import { NavLink } from 'react-router-dom'
-import React from 'react'
+import React, { useState } from 'react'
 
-const Navbar = () => {
+const Navbar = ({changeTextSearch}) => {
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
         <div className="container">
@@ -29,7 +30,7 @@ const Navbar = () => {
             </ul>
             <div className='form'>
                 <form className="d-flex">
-                    <input className="form-control me-2" type="search" id='searchkey' placeholder="Search" aria-label="Search"/>
+                    <input onChange={(e) => changeTextSearch(e.target.value) } className="form-control me-2" type="search" id='searchkey' placeholder="Search" aria-label="Search"/>
                     <button className="btn" onSubmit={e=>{e.preventDefault();}}  type="submit">Search</button>
                 </form>
             </div>

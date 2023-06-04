@@ -10,7 +10,7 @@ const Register = () => {
 
     toast.configure();
 
-    const [ fullName , setFullName ]= useState('');
+    const [ email , setEmail ]= useState('');
     const [ username , setUsername]= useState('');
     const [ password , setPassword ]= useState('');
     const [ confirm , setConfirm ] = useState('')
@@ -22,7 +22,7 @@ const Register = () => {
             username: username,
             password: password,
             confirmPassword: confirm,
-            fullName: fullName
+            email: email
         }
         await registerAPI(payload)
             .then(res => {
@@ -44,8 +44,8 @@ const Register = () => {
             <div className='container'>
                 <div className='row py-5'>
                     <div className="col-md-6 my-3">
-                        <label htmlFor="exampleFormControlInput1" className="form-label">Full Name</label>
-                        <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Enter Name" onChange={e=>setFullName(e.target.value)} />
+                        <label htmlFor="exampleFormControlInput1" className="form-label">Email</label>
+                        <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Enter Name" onChange={e=>setEmail(e.target.value)} />
                     </div>
                     <div className="col-md-6 my-3">
                         <label htmlFor="exampleFormControlInput2" className="form-label">Username</label> 

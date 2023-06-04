@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap";
 import { Switch , Route } from "react-router-dom";
 import Header from './components/Header/Header';
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import Navbar from './components/Navbar/Navbar';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
@@ -17,13 +17,15 @@ import BookInfo from './pages/BookInfo/BookInfo';
 
 function App() {
   
+  const [textSearh, setTextSearch] = useState('');
+
   return (
     <div className="App">
       <TopBar />
       <Header />
-      <Navbar />
+      <Navbar changeTextSearch = {setTextSearch} />
       <Switch>  
-        <Route path="/" exact><Home /></Route>
+        <Route path="/" exact><Home textSearch={textSearh} /></Route>
         <Route path="/login" ><Login /></Route>
         <Route path="/register" ><Register /></Route>
         <Route path="/account" ><Account /></Route>

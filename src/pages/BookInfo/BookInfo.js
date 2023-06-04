@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Redirect } from 'react-router-dom';
 import { moment } from 'moment'
 import { parse } from 'date-fns';
+import dayjs from 'dayjs';
 
 const { TextArea } = Input;
 
@@ -23,7 +24,7 @@ const BookInfo = () => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [description, setDescription] = useState('')
-    const [date, setDate] = useState('')
+    const [date, setDate] = useState('01/01/2023')
     const [page, setPage] = useState('')
     const [category, setCategory] = useState('')
     const [imageUrl, setImageUrl] = useState('')
@@ -67,11 +68,9 @@ const BookInfo = () => {
             .then(res => {
                 if ( res.data.statusCode=='OK' ){
                     let book = res.data.data;
-                    console.log(book)
                     setTitle(book.title);
                     setAuthor(book.author)
-                    setDate((new Date(book.date)).toLocaleDateString('en-GB'))
-                    console.log((new Date(book.date)).toLocaleDateString('en-GB'))
+                    setDate(convertDate(book.date))
                     setPrice(book.price)
                     setDescription(book.description)
                     setCategory(book.category.id)
@@ -141,7 +140,6 @@ const BookInfo = () => {
             description: description
         }
 
-        console.log(payload)
         await updateBookAPI(payload)
             .then(res => {
                 if ( res.data.statusCode=='OK' ) {
@@ -161,6 +159,12 @@ const BookInfo = () => {
 
     const user = userService.get();
 
+    function convertDate(inputFormat) {
+        function pad(s) { return (s < 10) ? '0' + s : s; }
+        var d = new Date(inputFormat)
+        return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
+      }
+
     const handleAddBook = async () => {
         const t = date.split("/")
         const b = new Date(`${t[2]}-${t[1]}-${t[0]}`).toISOString()
@@ -176,7 +180,6 @@ const BookInfo = () => {
             imageUrl: imageUrl,
             description: description
         }
-        console.log(payload)
         await createBookAPI(payload)
             .then(res => {
                 if ( res.data.statusCode=='OK' ) {
@@ -211,7 +214,6 @@ const BookInfo = () => {
     }
 
     const onSelectDate = (date, dateString) => {
-        console.log(dateString)
         setDate(dateString)
     }
 
@@ -249,7 +251,8 @@ const BookInfo = () => {
                     <Row>
                         <Col span={10}>
                             <p className='bold space'>Ngày phát hành <span style={{color: 'red'}}>*</span></p>
-                            <DatePicker className='select-category' disabled={editable} onChange={onSelectDate} format={dateFormat} />
+                            {( date!='01/01/2023' && titleButtonAction=='Edit') && <DatePicker className='select-category' disabled={editable} defaultValue={dayjs(date, dateFormat)} onChange={onSelectDate} format={dateFormat} /> }
+                            {(titleButtonAction=='Add') && <DatePicker className='select-category' disabled={editable} onChange={onSelectDate} format={dateFormat} /> }
                         </Col>
                         <Col span={4}></Col>
                         <Col span={10}>
