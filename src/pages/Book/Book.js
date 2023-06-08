@@ -97,7 +97,7 @@ const Book = () => {
 				for (let i = 0; i < data.length; i++) {
 					tmp.push({
 						avatar: <Image preview={false} style={{marginTop: 4}} width={50} src="./image/user.png" alt={data[i].user.email} />,
-						author: data[i].user.email,
+						author: data[i].user.username,
 						content: <p>{data[i].content}</p>,
 					})
 				}

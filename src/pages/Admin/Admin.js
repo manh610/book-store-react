@@ -6,6 +6,9 @@ import {Link} from 'react-router-dom';
 import './style.css';
 import { deleteBookAPI, getBooksAPI } from "../../apis";
 
+import {toast} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 const column = [
     {
         title: 'Title',
@@ -50,148 +53,19 @@ const column = [
 ]
 
 const Admin = () => {
+
+    toast.configure();
     
     const initUser = {
         id: 1,
         username: 'manh610',
         role: 'USER'
     }
-    
 
     const user = userService.get() || initUser;
 
     console.log(user)
 
-
-    // const bookData = [
-    //     {
-    //         "id": 1,
-    //         "title": "book1",
-    //         "author": "nguyen van a",
-    //         "date": "2023-15-15",
-    //         "description": "first book to read",
-    //         "imageUrl": "./image/book7.png",
-    //         "price": 200,
-    //         "page": 200,
-    //         "sold": 4,
-    //         "category": "Truyen ngan",
-    //         "actionView": user.role=='ADMIN'?<Link to={`/manage-book/1`}><Button className="btn-view-book">View</Button></Link>:null,
-    //         "actionDel": user.role=='ADMIN'?<Button onClick={() => handleOpen()} className="btn-del-book">Delete</Button>:null,
-    //     },
-    //     {
-    //         "id": 2,
-    //         "title": "book1",
-    //         "author": "nguyen van a",
-    //         "date": "2023-15-15",
-    //         "description": "first book to read",
-    //         "imageUrl": "./image/book7.png",
-    //         "price": 200,
-    //         "page": 200,
-    //         "sold": 4,
-    //         "category": "Truyen ngan",
-    //         "actionView": user.role=='ADMIN'?<Button>View</Button>:null,
-    //         "actionDel": user.role=='ADMIN'?<Button type="primary" danger>Delete</Button>:null,
-    //     },
-    //     {
-    //         "id": 3,
-    //         "title": "book1",
-    //         "author": "nguyen van a",
-    //         "date": "2023-15-15",
-    //         "description": "first book to read",
-    //         "imageUrl": "./image/book7.png",
-    //         "price": 200,
-    //         "page": 200,
-    //         "sold": 4,
-    //         "category": "Truyen ngan",
-    //         "actionView": user.role=='ADMIN'?<Button>View</Button>:null,
-    //         "actionDel": user.role=='ADMIN'?<Button>Delete</Button>:null,
-    //     },
-    //     {
-    //         "id": 4,
-    //         "title": "book1",
-    //         "author": "nguyen van a",
-    //         "date": "2023-15-15",
-    //         "description": "first book to read",
-    //         "imageUrl": "./image/book7.png",
-    //         "price": 200,
-    //         "page": 200,
-    //         "sold": 4,
-    //         "category": "Truyen ngan",
-    //         "actionView": user.role=='ADMIN'?<Button>View</Button>:null,
-    //         "actionDel": user.role=='ADMIN'?<Button>Delete</Button>:null,
-    //     },
-    //     {
-    //         "id": 4,
-    //         "title": "book1",
-    //         "author": "nguyen van a",
-    //         "date": "2023-15-15",
-    //         "description": "first book to read",
-    //         "imageUrl": "./image/book7.png",
-    //         "price": 200,
-    //         "page": 200,
-    //         "sold": 4,
-    //         "category": "Truyen ngan",
-    //         "actionView": user.role=='ADMIN'?<Button>View</Button>:null,
-    //         "actionDel": user.role=='ADMIN'?<Button>Delete</Button>:null,
-    //     },
-    //     {
-    //         "id": 4,
-    //         "title": "book1",
-    //         "author": "nguyen van a",
-    //         "date": "2023-15-15",
-    //         "description": "first book to read",
-    //         "imageUrl": "./image/book7.png",
-    //         "price": 200,
-    //         "page": 200,
-    //         "sold": 4,
-    //         "category": "Truyen ngan",
-    //         "actionView": user.role=='ADMIN'?<Button>View</Button>:null,
-    //         "actionDel": user.role=='ADMIN'?<Button>Delete</Button>:null,
-    //     },
-    //     {
-    //         "id": 4,
-    //         "title": "book1",
-    //         "author": "nguyen van a",
-    //         "date": "2023-15-15",
-    //         "description": "first book to read",
-    //         "imageUrl": "./image/book7.png",
-    //         "price": 200,
-    //         "page": 200,
-    //         "sold": 4,
-    //         "category": "Truyen ngan",
-    //         "actionView": user.role=='ADMIN'?<Button>View</Button>:null,
-    //         "actionDel": user.role=='ADMIN'?<Button>Delete</Button>:null,
-    //     },
-    //     {
-    //         "id": 4,
-    //         "title": "book1",
-    //         "author": "nguyen van a",
-    //         "date": "2023-15-15",
-    //         "description": "first book to read",
-    //         "imageUrl": "./image/book7.png",
-    //         "price": 200,
-    //         "page": 200,
-    //         "sold": 4,
-    //         "category": "Truyen ngan",
-    //         "actionView": user.role=='ADMIN'?<Button>View</Button>:null,
-    //         "actionDel": user.role=='ADMIN'?<Button>Delete</Button>:null,
-    //     },
-    //     {
-    //         "id": 4,
-    //         "title": "book1",
-    //         "author": "nguyen van a",
-    //         "date": "2023-15-15",
-    //         "description": "first book to read",
-    //         "imageUrl": "./image/book7.png",
-    //         "price": 200,
-    //         "page": 200,
-    //         "sold": 4,
-    //         "category": "Truyen ngan",
-    //         "actionView": user.role=='ADMIN'?<Button>View</Button>:null,
-    //         "actionDel": user.role=='ADMIN'?<Button>Delete</Button>:null,
-    //     }
-    
-    // ]
 
     const getDataBook = async () => {
         await getBooksAPI()
@@ -219,6 +93,9 @@ const Admin = () => {
         await deleteBookAPI(payload)
             .then(res => {
                 if ( res.data.statusCode=='OK' ) {
+                    toast.success('Xóa sách thành công', {
+                        position: toast.POSITION.TOP_CENTER
+                    })
                     getDataBook();
                     handleClose()
                 }

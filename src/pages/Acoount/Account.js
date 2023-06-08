@@ -72,7 +72,7 @@ const Account = () => {
             <div className='container'>
                 <div className='row py-5 justify-content-center top'>
                     <div className="col-md-12 my-3">
-                        <h4 className='hello'>hello {user.email}!</h4>
+                        <h4 className='hello'>hello {user.username} ({user.email}) !</h4>
                         <p className='title'>Danh sách các sản phẩm đã đặt mua</p>
                     </div>
                 </div>

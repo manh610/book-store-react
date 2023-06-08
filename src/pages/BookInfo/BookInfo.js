@@ -90,10 +90,12 @@ const BookInfo = () => {
         getAllCategory();
         if ( id > 0 ) {
             setTitleButtonAction('Edit');
+            setTextContent('Edit Book')
             getData()
             setEditable(true)
         } else {
             setTitleButtonAction('Add');
+            setTextContent('New Book')
             setEditable(false)
         }
     }, [])
@@ -133,9 +135,9 @@ const BookInfo = () => {
             categoryId: category,
             author: author,
             date: b,
-            page: page,
+            page: page || 0,
             sold: 0,
-            price: price,
+            price: price || 0,
             imageUrl: imageUrl,
             description: description
         }
@@ -170,13 +172,13 @@ const BookInfo = () => {
         const b = new Date(`${t[2]}-${t[1]}-${t[0]}`).toISOString()
         const payload = {
             title: title,
-            categoryId: category,
+            categoryId: category || null,
             author: author,
             date: b,
             userId: user.id,
-            page: page,
+            page: page || 0,
             sold: 0,
-            price: price,
+            price: price || 0,
             imageUrl: imageUrl,
             description: description
         }
@@ -185,7 +187,6 @@ const BookInfo = () => {
                 if ( res.data.statusCode=='OK' ) {
                     toast.success('Tạo sách thành công');
                     clearInput()
-                    handleClose()
                     setBackToAdmin(true);
                 } else {
                     toast.error(res.data.message, {
@@ -194,10 +195,11 @@ const BookInfo = () => {
                 }
             })
             .catch(err => console.log(err))
+        handleClose()
     }
 
     const checkValidate = () => {
-        if ( title=='' || author=='' || date=='' || price=='' || description=='' || category=='' || page=='' || imageUrl=='')
+        if ( title=='' || author=='' || date=='')
             return false;
         return true;
     }
@@ -228,10 +230,12 @@ const BookInfo = () => {
         handleAddBook()
     }
 
+    const [textContent, setTextContent] = useState('')
+
     return( 
         <div className="container content-book-info">
             <Row className='title-page'>
-                <p className='title-page-content'>Sách</p>
+                <p className='title-page-content'>{textContent}</p>
             </Row>
             <Row>
                 <Col span={11}>
@@ -251,7 +255,7 @@ const BookInfo = () => {
                     <Row>
                         <Col span={10}>
                             <p className='bold space'>Ngày phát hành <span style={{color: 'red'}}>*</span></p>
-                            {( date!='01/01/2023' && titleButtonAction=='Edit') && <DatePicker className='select-category' disabled={editable} defaultValue={dayjs(date, dateFormat)} onChange={onSelectDate} format={dateFormat} /> }
+                            {( date!='01/01/2023' && textContent=='Edit Book') && <DatePicker className='select-category' disabled={editable} defaultValue={dayjs(date, dateFormat)} onChange={onSelectDate} format={dateFormat} /> }
                             {(titleButtonAction=='Add') && <DatePicker className='select-category' disabled={editable} onChange={onSelectDate} format={dateFormat} /> }
                         </Col>
                         <Col span={4}></Col>
@@ -262,7 +266,7 @@ const BookInfo = () => {
                     </Row>
                     <Row>
                         <Col span={10}>
-                            <p className='bold space'>Thể loại</p>
+                            <p className='bold space'>Thể loại <span style={{color: 'red'}}>*</span></p>
                             <Select 
                                 disabled = {editable}
                                 className='select-category'

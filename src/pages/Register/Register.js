@@ -45,11 +45,11 @@ const Register = () => {
                 <div className='row py-5'>
                     <div className="col-md-6 my-3">
                         <label htmlFor="exampleFormControlInput1" className="form-label">Email</label>
-                        <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Enter Name" onChange={e=>setEmail(e.target.value)} />
+                        <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Enter Email" onChange={e=>setEmail(e.target.value)} />
                     </div>
                     <div className="col-md-6 my-3">
                         <label htmlFor="exampleFormControlInput2" className="form-label">Username</label> 
-                        <input type="email" className="form-control" id="exampleFormControlInput2" placeholder="Enter Email" onChange={e=>setUsername(e.target.value)} /> 
+                        <input type="email" className="form-control" id="exampleFormControlInput2" placeholder="Enter Username" onChange={e=>setUsername(e.target.value)} /> 
                     </div>
                     <div className="col-md-6 mb-3">
                         <label htmlFor="exampleFormControlInput3" className="form-label">Password</label>

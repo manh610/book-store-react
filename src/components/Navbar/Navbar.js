@@ -18,12 +18,12 @@ const Navbar = ({changeTextSearch}) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                 <NavLink className="nav-link" to="/about">ABOUT US</NavLink>
                 </li>
                 <li className="nav-item">
                 <NavLink className="nav-link" to="/contact">CONTACT US</NavLink>
-                </li>
+                </li> */}
                 <li className="nav-item">
                 <NavLink className="nav-link" to="/admin">ADMIN</NavLink>
                 </li>
