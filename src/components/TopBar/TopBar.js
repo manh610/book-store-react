@@ -11,14 +11,13 @@ const TopBar = () => {
   const user = userService.get();
 
   useEffect(() => {
-    console.log(user)
     if (user != null) 
       setLogged(true)
   },[])
 
   const onSignOut = () =>{
     userService.logout()
-    window.location.reload()
+    window.location.replace("http://localhost:3000")
     setLogged(false)
   }
 

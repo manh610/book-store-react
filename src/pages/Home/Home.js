@@ -11,7 +11,7 @@ import './style.css';
 import Exclusive from '../../components/Exclusive/Exclusive';
 import { userService } from '../../service/user';
 
-const Home = ({textSearch}) => {
+const Home = ({textSearch, valueClick}) => {
 	
 	useEffect(() => {
 		const check = localStorage.getItem('check');
@@ -21,9 +21,11 @@ const Home = ({textSearch}) => {
 		}
 	}, [])
 
+	const [full, setFull] = useState(true);
+
 	return (
 		<div className='home'>
-		{ textSearch.length == 0 && <div>
+		{ full && <div>
 		<OwlCarousel className='owl-theme' loop margin={10} items={1} dots={false} autoplay={true} nav>
 			<div className='item d-flex align-items-center justify-content-center'>
 				<div className='books d-flex justify-content-between'>
@@ -82,7 +84,7 @@ const Home = ({textSearch}) => {
 			</div>
 		</section>
 		</div> }
-		<Exclusive textSearch={textSearch}/>
+		<Exclusive textSearch={textSearch} valueClick={valueClick} setFull={setFull}/>
 		
 		</div>
 	)

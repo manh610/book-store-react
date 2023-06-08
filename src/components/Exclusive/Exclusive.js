@@ -3,7 +3,7 @@ import './style.css';
 import {Link} from 'react-router-dom';
 import { getBooksAPI } from '../../apis';
 
-const Exclusive = ({textSearch}) => {
+const Exclusive = ({textSearch, valueClick, setFull}) => {
 
   	const books = [
 		{
@@ -32,6 +32,10 @@ const Exclusive = ({textSearch}) => {
 						return lowerCaseName.includes(textSearchLower)
 					})
 					console.log(tmp)
+					if ( tmp.length < res.data.data.length ) 
+						setFull(false);
+					else	
+						setFull(true)
 					setBookState(tmp);
 				}
 			})
@@ -43,8 +47,13 @@ const Exclusive = ({textSearch}) => {
 	}, [])
 
 	useEffect(() => {
-		getDataBook()
+		if ( valueClick == 0 )
+			getDataBook()
 	},[textSearch])
+
+	useEffect(() => {
+		getDataBook()
+	},[valueClick])
 
 	return (
 		<section className='Exclusive'>

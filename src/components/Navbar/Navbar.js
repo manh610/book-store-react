@@ -2,7 +2,7 @@ import './style.css'
 import { NavLink } from 'react-router-dom'
 import React, { useState } from 'react'
 
-const Navbar = ({changeTextSearch}) => {
+const Navbar = ({changeTextSearch, onClickSearch, valueClick}) => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
@@ -18,21 +18,15 @@ const Navbar = ({changeTextSearch}) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                {/* <li className="nav-item">
-                <NavLink className="nav-link" to="/about">ABOUT US</NavLink>
-                </li>
-                <li className="nav-item">
-                <NavLink className="nav-link" to="/contact">CONTACT US</NavLink>
-                </li> */}
                 <li className="nav-item">
                 <NavLink className="nav-link" to="/admin">ADMIN</NavLink>
                 </li>
             </ul>
             <div className='form'>
-                <form className="d-flex">
-                    <input onChange={(e) => changeTextSearch(e.target.value) } className="form-control me-2" type="search" id='searchkey' placeholder="Search" aria-label="Search"/>
-                    <button className="btn" onSubmit={e=>{e.preventDefault();}}  type="submit">Search</button>
-                </form>
+                <div className="d-flex">
+                    <input onChange={(e) => changeTextSearch(e.target.value) } className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <button className="btn" onClick={() => onClickSearch(valueClick + 1)} >Search</button>
+                </div>
             </div>
             </div>
         </div>

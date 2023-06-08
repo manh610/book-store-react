@@ -18,14 +18,15 @@ import BookInfo from './pages/BookInfo/BookInfo';
 function App() {
   
   const [textSearh, setTextSearch] = useState('');
+  const [clickSearch, setClickSearch] = useState(0)
 
   return (
     <div className="App">
       <TopBar />
       <Header />
-      <Navbar changeTextSearch = {setTextSearch} />
+      <Navbar changeTextSearch = {setTextSearch} valueClick={clickSearch} onClickSearch={setClickSearch} />
       <Switch>  
-        <Route path="/" exact><Home textSearch={textSearh} /></Route>
+        <Route path="/" exact><Home textSearch={textSearh} valueClick={clickSearch}/></Route>
         <Route path="/login" ><Login /></Route>
         <Route path="/register" ><Register /></Route>
         <Route path="/account" ><Account /></Route>
