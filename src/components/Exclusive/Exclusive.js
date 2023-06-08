@@ -21,22 +21,14 @@ const Exclusive = ({textSearch, valueClick, setFull}) => {
 	const [bookstate, setBookState] = useState(books);
 
 	const getDataBook = async () => {
-		console.log(textSearch)
-		await getBooksAPI()
+		await getBooksAPI(textSearch)
 			.then(async res => {
 				if ( res.data.statusCode=='OK' ) {
-					console.log(res.data.data)
-					const textSearchLower = textSearch.toLowerCase();
-					const tmp = await res.data.data.filter((book) => {
-						const lowerCaseName = book.title.toLowerCase();
-						return lowerCaseName.includes(textSearchLower)
-					})
-					console.log(tmp)
-					if ( tmp.length < res.data.data.length ) 
+					if ( textSearch!='' ) 
 						setFull(false);
 					else	
 						setFull(true)
-					setBookState(tmp);
+					setBookState(res.data.data);
 				}
 			})
 			.catch(err => console.log(err))

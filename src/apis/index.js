@@ -4,7 +4,7 @@ const PORT = 3008;
 const URL_API = `http://localhost:${PORT}`
 
 // book api
-export const getBooksAPI = async() => axios.get(`${URL_API}/book/getAll`);
+export const getBooksAPI = async(textSearch) => axios.get(`${URL_API}/book/getAll?name=${textSearch}`);
 
 export const getBookByIdAPI = async(payload) => axios.post(`${URL_API}/book/getInfo`, payload);
 
